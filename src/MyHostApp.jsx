@@ -1,53 +1,68 @@
 import React, { useState } from 'react';
-import { MapPin, Home, Users, Star, Plus, Menu, X, Sparkles } from 'lucide-react';
+import { MapPin, Home, Users, Star, Plus, Menu, X, Sparkles, Search, Globe, Heart, Calendar, User } from 'lucide-react';
+import { calculateBookingFees, calculateNights, FEE_CONFIG } from './utils/paymentUtils';
 
 const MyHostApp = () => {
   const [currentPage, setCurrentPage] = useState('home');
   const [selectedProperty, setSelectedProperty] = useState(null);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
   
   const [properties, setProperties] = useState([
     {
       id: 1,
       title: "Lakeside Villa",
-      location: "Kisumu",
-      description: "Beautiful 4-bedroom villa with lake view",
+      location: "Kisumu, Kenya",
+      description: "Beautiful 4-bedroom villa with stunning lake view. Perfect for families and groups.",
       rooms: 4,
       dailyRate: 5000,
-      amenities: ["WiFi", "Pool", "Garden", "Parking"],
+      amenities: ["WiFi", "Pool", "Garden", "Parking", "Kitchen", "Washing Machine"],
       host: "Jane Kimani",
       caretaker: "John Ochieng",
       rating: 4.8,
       reviews: 12,
-      image: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=500"
+      image: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&h=600&fit=crop",
+      images: [
+        "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&h=600&fit=crop",
+        "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&h=600&fit=crop",
+        "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&h=600&fit=crop"
+      ]
     },
     {
       id: 2,
       title: "Mountain Retreat",
-      location: "Nanyuki",
-      description: "Cozy 3-bedroom house near Mt. Kenya",
+      location: "Nanyuki, Kenya",
+      description: "Cozy 3-bedroom house near Mt. Kenya with fireplace and garden views.",
       rooms: 3,
       dailyRate: 4000,
-      amenities: ["WiFi", "Fireplace", "Garden"],
+      amenities: ["WiFi", "Fireplace", "Garden", "Kitchen", "Parking"],
       host: "Peter Mwangi",
       caretaker: "Mary Wanjiku",
       rating: 4.9,
       reviews: 8,
-      image: "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=500"
+      image: "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=800&h=600&fit=crop",
+      images: [
+        "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=800&h=600&fit=crop",
+        "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=800&h=600&fit=crop"
+      ]
     },
     {
       id: 3,
       title: "Countryside Cottage",
-      location: "Nakuru",
-      description: "Peaceful 2-bedroom cottage with farm views",
+      location: "Nakuru, Kenya",
+      description: "Peaceful 2-bedroom cottage with farm views. Ideal for couples and small families.",
       rooms: 2,
       dailyRate: 3000,
-      amenities: ["WiFi", "Garden", "Kitchen"],
+      amenities: ["WiFi", "Garden", "Kitchen", "Parking"],
       host: "Sarah Njeri",
       caretaker: "David Kamau",
       rating: 4.7,
       reviews: 15,
-      image: "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=500"
+      image: "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&h=600&fit=crop",
+      images: [
+        "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&h=600&fit=crop",
+        "https://images.unsplash.com/photo-1600607687644-c7171b42498b?w=800&h=600&fit=crop"
+      ]
     }
   ]);
 
@@ -57,6 +72,19 @@ const MyHostApp = () => {
     checkOut: '',
     guests: 1
   });
+
+  const [bookingDetails, setBookingDetails] = useState({
+    checkIn: '',
+    checkOut: '',
+    guests: 1,
+    customerEmail: '',
+    customerPhone: '',
+    customerFirstName: '',
+    customerLastName: ''
+  });
+
+  const [isProcessingPayment, setIsProcessingPayment] = useState(false);
+
 
   const [newProperty, setNewProperty] = useState({
     title: '',
@@ -104,64 +132,167 @@ const MyHostApp = () => {
   };
 
   const filteredProperties = properties.filter(p => 
-    !bookingForm.location || p.location.toLowerCase().includes(bookingForm.location.toLowerCase())
+    !searchQuery || 
+    p.location.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    p.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    (!bookingForm.location || p.location.toLowerCase().includes(bookingForm.location.toLowerCase()))
   );
 
-  // Logo Component - Two connected human figures (handshake/infinity design)
-  const Logo = ({ size = 40, color = "#FB923C", className = "" }) => (
-    <svg width={size} height={size} viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
-      {/* Left figure: head and body */}
-      <circle cx="60" cy="55" r="22" stroke={color} strokeWidth="14" fill="none"/>
-      <path d="M 60 77 Q 60 100 55 120 Q 50 140 60 150 Q 70 160 85 160" stroke={color} strokeWidth="14" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
-      
-      {/* Right figure: head and body */}
-      <circle cx="140" cy="55" r="22" stroke={color} strokeWidth="14" fill="none"/>
-      <path d="M 140 77 Q 140 100 145 120 Q 150 140 140 150 Q 130 160 115 160" stroke={color} strokeWidth="14" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
-      
-      {/* Connection loop at bottom - forms the infinity/handshake */}
-      <path d="M 85 160 Q 92 165 100 165 Q 108 165 115 160" stroke={color} strokeWidth="14" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
-    </svg>
-  );
-
-  const DecorativePattern = () => (
-    <div className="absolute inset-0 opacity-10 pointer-events-none">
-      <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <pattern id="hearts" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse">
-            <circle cx="30" cy="30" r="8" fill="#D15449"/>
-            <circle cx="50" cy="30" r="8" fill="#D15449"/>
-            <path d="M20 40 Q30 50 40 40 Q50 30 60 40 Q70 50 60 60 Q50 70 40 60 Q30 50 20 60 Q10 50 20 40 Z" fill="#D15449"/>
-          </pattern>
-        </defs>
-        <rect width="100%" height="100%" fill="url(#hearts)"/>
-      </svg>
-    </div>
-  );
-
-  const HomePage = () => (
-    <div className="space-y-12">
-      <div className="relative bg-gradient-to-r from-red-500 via-red-400 to-orange-400 text-white rounded-2xl p-12 text-center overflow-hidden">
-        <DecorativePattern />
-        
-        <div className="absolute top-10 left-10 animate-bounce">
-          <Home className="w-8 h-8 opacity-30" />
-        </div>
-        <div className="absolute bottom-10 right-10 animate-pulse">
-          <Star className="w-10 h-10 opacity-30" fill="currentColor" />
-        </div>
-        <div className="absolute top-1/2 right-20 animate-bounce" style={{animationDelay: '0.5s'}}>
-          <MapPin className="w-6 h-6 opacity-30" />
-        </div>
-        
-        <div className="relative z-10">
-          <h1 className="text-5xl font-bold mb-4">Welcome to MyHost</h1>
-          <p className="text-xl mb-8">Alternative countryside accommodation in homely settings</p>
-          <button 
-            onClick={() => setCurrentPage('properties')}
-            className="bg-white text-red-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition transform hover:scale-105 shadow-lg"
+  // Airbnb-style Header
+  const Header = () => (
+    <header className="sticky top-0 z-50 bg-white border-b border-gray-200 shadow-sm">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16">
+          {/* Logo */}
+          <div 
+            className="flex items-center cursor-pointer"
+            onClick={() => setCurrentPage('home')}
           >
-            Explore Properties
-          </button>
+            <div className="text-2xl font-bold">
+              <span className="text-rose-500">My</span>
+              <span className="text-gray-900">Host</span>
+            </div>
+          </div>
+
+          {/* Search Bar - Desktop */}
+          {currentPage === 'home' && (
+            <div className="hidden md:flex flex-1 max-w-xl mx-8">
+              <div className="flex items-center w-full border border-gray-300 rounded-full px-4 py-2 shadow-sm hover:shadow-md transition-shadow">
+                <div className="flex-1">
+                  <div className="text-xs font-semibold text-gray-900">Location</div>
+                  <input
+                    type="text"
+                    placeholder="Where are you going?"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="w-full border-none outline-none text-sm text-gray-600"
+                  />
+                </div>
+                <div className="border-l border-gray-300 mx-4 h-8"></div>
+                <div className="flex-1">
+                  <div className="text-xs font-semibold text-gray-900">Check in</div>
+                  <input
+                    type="date"
+                    className="w-full border-none outline-none text-sm text-gray-600"
+                  />
+                </div>
+                <div className="border-l border-gray-300 mx-4 h-8"></div>
+                <div className="flex-1">
+                  <div className="text-xs font-semibold text-gray-900">Check out</div>
+                  <input
+                    type="date"
+                    className="w-full border-none outline-none text-sm text-gray-600"
+                  />
+                </div>
+                <div className="border-l border-gray-300 mx-4 h-8"></div>
+                <div className="flex-1">
+                  <div className="text-xs font-semibold text-gray-900">Guests</div>
+                  <input
+                    type="number"
+                    min="1"
+                    className="w-full border-none outline-none text-sm text-gray-600"
+                  />
+                </div>
+                <button className="ml-4 bg-rose-500 text-white rounded-full p-2 hover:bg-rose-600 transition">
+                  <Search className="w-5 h-5" />
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* Right Menu */}
+          <div className="flex items-center space-x-4">
+            <button 
+              onClick={() => setCurrentPage('host')}
+              className="hidden md:block px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-full transition"
+            >
+              Become a Host
+            </button>
+            <button className="hidden md:flex items-center space-x-2 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-full transition">
+              <Globe className="w-5 h-5" />
+            </button>
+            <button className="flex items-center space-x-2 px-4 py-2 border border-gray-300 rounded-full hover:shadow-md transition-shadow">
+              <Menu className="w-5 h-5" />
+              <User className="w-5 h-5" />
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+  );
+
+  // Home Page - Airbnb Style
+  const HomePage = () => (
+    <div className="space-y-8">
+      {/* Hero Section */}
+      <div className="relative h-[70vh] min-h-[500px] rounded-2xl overflow-hidden">
+        <img 
+          src="https://images.unsplash.com/photo-1566073771259-6a0d9c6e7f9a?w=1920&h=1080&fit=crop"
+          alt="Countryside"
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent">
+          <div className="absolute bottom-20 left-10 right-10">
+            <h1 className="text-5xl md:text-6xl font-bold text-white mb-4">
+              Not sure where to go? Perfect.
+            </h1>
+            <button 
+              onClick={() => setCurrentPage('properties')}
+              className="bg-white text-gray-900 px-8 py-4 rounded-full font-semibold hover:shadow-xl transition-shadow"
+            >
+              I'm flexible
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Property Grid */}
+      <div>
+        <div className="flex items-center justify-between mb-6">
+          <h2 className="text-2xl font-semibold">Explore nearby</h2>
+          <button className="text-sm font-semibold text-gray-900 underline">Show all</button>
+        </div>
+        
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          {filteredProperties.map(property => (
+            <div
+              key={property.id}
+              className="cursor-pointer group"
+              onClick={() => {
+                setSelectedProperty(property);
+                setCurrentPage('details');
+              }}
+            >
+              {/* Image */}
+              <div className="relative w-full h-64 rounded-xl overflow-hidden mb-3">
+                <img
+                  src={property.image}
+                  alt={property.title}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                />
+                <button className="absolute top-3 right-3 p-2 bg-white/80 backdrop-blur-sm rounded-full hover:bg-white transition">
+                  <Heart className="w-5 h-5 text-gray-700" />
+                </button>
+              </div>
+              
+              {/* Details */}
+              <div className="space-y-1">
+                <div className="flex items-center justify-between">
+                  <h3 className="font-semibold text-gray-900 truncate">{property.title}</h3>
+                  <div className="flex items-center space-x-1">
+                    <Star className="w-4 h-4 fill-black" />
+                    <span className="text-sm font-medium">{property.rating}</span>
+                  </div>
+                </div>
+                <p className="text-sm text-gray-500">{property.location}</p>
+                <p className="text-sm text-gray-500">{property.description.split('.')[0]}</p>
+                <div className="flex items-center space-x-1 pt-1">
+                  <span className="font-semibold text-gray-900">KSh {property.dailyRate}</span>
+                  <span className="text-gray-600">night</span>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
 
@@ -394,106 +525,223 @@ const MyHostApp = () => {
     </div>
   );
 
+  // Property Details - Airbnb Style
   const PropertyDetails = () => {
     if (!selectedProperty) return null;
     
+    const nights = calculateNights(bookingDetails.checkIn, bookingDetails.checkOut);
+    const fees = calculateBookingFees(selectedProperty.dailyRate, nights || 1);
+    const minDate = new Date().toISOString().split('T')[0];
+    
     return (
-      <div className="space-y-6">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Back Button */}
         <button 
           onClick={() => setCurrentPage('properties')}
-          className="text-red-600 hover:text-red-700 font-semibold flex items-center space-x-2 hover:underline"
+          className="mb-6 text-gray-600 hover:text-gray-900 font-medium"
         >
-          <span>←</span>
-          <span>Back to properties</span>
+          ← Back
         </button>
-        
-        <div className="bg-white rounded-xl shadow-md overflow-hidden border-2 border-red-100">
-          <div className="relative">
-            <img src={selectedProperty.image} alt={selectedProperty.title} className="w-full h-96 object-cover" />
-            <div className="absolute top-6 right-6 bg-white rounded-full p-3 shadow-xl">
-              <Star className="w-8 h-8 text-yellow-500" fill="currentColor" stroke="none" />
+
+        <div className="grid lg:grid-cols-3 gap-8">
+          {/* Main Content */}
+          <div className="lg:col-span-2 space-y-8">
+            {/* Title & Location */}
+            <div>
+              <h1 className="text-3xl font-semibold mb-2">{selectedProperty.title}</h1>
+              <div className="flex items-center space-x-2 text-gray-600">
+                <Star className="w-5 h-5 fill-black" />
+                <span className="font-medium">{selectedProperty.rating}</span>
+                <span>·</span>
+                <span className="underline">{selectedProperty.reviews} reviews</span>
+                <span>·</span>
+                <MapPin className="w-4 h-4" />
+                <span className="underline">{selectedProperty.location}</span>
+              </div>
+            </div>
+
+            {/* Image Gallery */}
+            <div className="grid grid-cols-2 gap-2 rounded-xl overflow-hidden">
+              <div className="col-span-2 row-span-2 h-96">
+                <img
+                  src={selectedProperty.images?.[0] || selectedProperty.image}
+                  alt={selectedProperty.title}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              {selectedProperty.images?.slice(1, 3).map((img, idx) => (
+                <div key={idx} className="h-48">
+                  <img src={img} alt="" className="w-full h-full object-cover" />
+                </div>
+              ))}
+            </div>
+
+            {/* Divider */}
+            <div className="border-t border-gray-200 pt-8">
+              <div className="grid md:grid-cols-2 gap-8">
+                {/* Description */}
+                <div className="space-y-4">
+                  <div>
+                    <h2 className="text-2xl font-semibold mb-4">About this place</h2>
+                    <p className="text-gray-700 leading-relaxed">{selectedProperty.description}</p>
+                  </div>
+                  
+                  <div>
+                    <h3 className="text-lg font-semibold mb-3">What this place offers</h3>
+                    <div className="grid grid-cols-2 gap-3">
+                      {selectedProperty.amenities.map((amenity, idx) => (
+                        <div key={idx} className="flex items-center space-x-3">
+                          <div className="w-6 h-6 flex items-center justify-center">
+                            <div className="w-2 h-2 bg-gray-900 rounded-full"></div>
+                          </div>
+                          <span className="text-gray-700">{amenity}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Host Info */}
+                <div className="border border-gray-200 rounded-xl p-6">
+                  <h3 className="text-lg font-semibold mb-4">Meet your host</h3>
+                  <div className="space-y-2 mb-4">
+                    <p className="font-medium">{selectedProperty.host}</p>
+                    <p className="text-sm text-gray-600">Host · {selectedProperty.reviews} reviews</p>
+                  </div>
+                  <button className="w-full border border-gray-900 rounded-lg px-4 py-2 font-medium hover:bg-gray-50 transition">
+                    Contact host
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
-          
-          <div className="p-8">
-            <div className="flex justify-between items-start mb-4">
-              <div>
-                <h1 className="text-4xl font-bold mb-2">{selectedProperty.title}</h1>
-                <div className="flex items-center text-gray-600">
-                  <MapPin className="w-5 h-5 mr-2 text-red-500" />
-                  <span>{selectedProperty.location}</span>
-                </div>
-              </div>
-              <div className="text-right bg-gradient-to-br from-yellow-50 to-orange-50 p-4 rounded-lg border border-yellow-200">
-                <div className="flex items-center text-yellow-500 mb-2">
-                  <Star className="w-6 h-6" fill="currentColor" stroke="none" />
-                  <span className="ml-2 text-2xl font-bold">{selectedProperty.rating}</span>
-                </div>
-                <span className="text-gray-600 text-sm">({selectedProperty.reviews} reviews)</span>
-              </div>
-            </div>
 
-            <p className="text-gray-700 mb-6 text-lg">{selectedProperty.description}</p>
-
-            <div className="grid md:grid-cols-2 gap-8 mb-8">
-              <div className="bg-gradient-to-br from-red-50 to-orange-50 p-6 rounded-xl border border-red-100">
-                <h3 className="font-bold text-xl mb-4 flex items-center text-red-700">
-                  <Home className="w-6 h-6 mr-2" />
-                  Property Details
-                </h3>
-                <ul className="space-y-3">
-                  <li className="flex items-center bg-white p-3 rounded-lg shadow-sm">
-                    <div className="w-10 h-10 bg-gradient-to-br from-red-500 to-orange-500 rounded-lg flex items-center justify-center mr-3">
-                      <Home className="w-5 h-5 text-white" />
-                    </div>
-                    <span>{selectedProperty.rooms} Rooms Available</span>
-                  </li>
-                  <li className="flex items-center bg-white p-3 rounded-lg shadow-sm">
-                    <div className="w-10 h-10 bg-gradient-to-br from-orange-500 to-red-500 rounded-lg flex items-center justify-center mr-3">
-                      <Users className="w-5 h-5 text-white" />
-                    </div>
-                    <span>Host: {selectedProperty.host}</span>
-                  </li>
-                  <li className="flex items-center bg-white p-3 rounded-lg shadow-sm">
-                    <div className="w-10 h-10 bg-gradient-to-br from-red-400 to-orange-400 rounded-lg flex items-center justify-center mr-3">
-                      <Users className="w-5 h-5 text-white" />
-                    </div>
-                    <span>Caretaker: {selectedProperty.caretaker}</span>
-                  </li>
-                </ul>
-              </div>
-
-              <div className="bg-gradient-to-br from-orange-50 to-red-50 p-6 rounded-xl border border-orange-100">
-                <h3 className="font-bold text-xl mb-4 flex items-center text-orange-700">
-                  <Sparkles className="w-6 h-6 mr-2" />
-                  Amenities
-                </h3>
-                <div className="flex flex-wrap gap-2">
-                  {selectedProperty.amenities.map((amenity, index) => (
-                    <span key={index} className="bg-white text-red-700 px-4 py-2 rounded-full text-sm border-2 border-red-200 font-semibold shadow-sm flex items-center space-x-2">
-                      <span className="w-2 h-2 bg-red-500 rounded-full"></span>
-                      <span>{amenity}</span>
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-gradient-to-br from-red-50 to-orange-50 p-8 rounded-xl border-2 border-red-200 relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-red-200 rounded-bl-full opacity-20"></div>
-              <div className="absolute bottom-0 left-0 w-24 h-24 bg-orange-200 rounded-tr-full opacity-20"></div>
-              
-              <div className="flex justify-between items-center relative z-10">
+          {/* Booking Card - Sticky */}
+          <div className="lg:col-span-1">
+            <div className="sticky top-24 border border-gray-200 rounded-xl p-6 shadow-lg">
+              <div className="flex items-center justify-between mb-6">
                 <div>
-                  <p className="text-sm text-gray-600 mb-1">Price per night</p>
-                  <span className="text-4xl font-bold text-red-600">KSh {selectedProperty.dailyRate}</span>
+                  <span className="text-2xl font-semibold">KSh {selectedProperty.dailyRate}</span>
                   <span className="text-gray-600"> / night</span>
                 </div>
-                <button className="bg-gradient-to-r from-red-500 to-orange-500 text-white px-10 py-4 rounded-lg font-semibold hover:from-red-600 hover:to-orange-600 transition transform hover:scale-105 shadow-lg flex items-center space-x-2">
-                  <Star className="w-5 h-5" fill="currentColor" />
-                  <span>Book Now</span>
-                </button>
               </div>
+
+              {/* Date Picker */}
+              <div className="grid grid-cols-2 gap-2 mb-4">
+                <div className="border border-gray-300 rounded-lg p-3">
+                  <label className="text-xs font-semibold text-gray-700">CHECK-IN</label>
+                  <input
+                    type="date"
+                    min={minDate}
+                    value={bookingDetails.checkIn}
+                    onChange={(e) => setBookingDetails({...bookingDetails, checkIn: e.target.value})}
+                    className="w-full border-none outline-none text-sm mt-1"
+                  />
+                </div>
+                <div className="border border-gray-300 rounded-lg p-3">
+                  <label className="text-xs font-semibold text-gray-700">CHECKOUT</label>
+                  <input
+                    type="date"
+                    min={bookingDetails.checkIn || minDate}
+                    value={bookingDetails.checkOut}
+                    onChange={(e) => setBookingDetails({...bookingDetails, checkOut: e.target.value})}
+                    className="w-full border-none outline-none text-sm mt-1"
+                  />
+                </div>
+              </div>
+
+              {/* Guests */}
+              <div className="border border-gray-300 rounded-lg p-3 mb-4">
+                <label className="text-xs font-semibold text-gray-700">GUESTS</label>
+                <input
+                  type="number"
+                  min="1"
+                  value={bookingDetails.guests}
+                  onChange={(e) => setBookingDetails({...bookingDetails, guests: parseInt(e.target.value) || 1})}
+                  className="w-full border-none outline-none text-sm mt-1"
+                />
+              </div>
+
+              {/* Price Breakdown */}
+              {nights > 0 && (
+                <div className="space-y-3 mb-6 pt-4 border-t border-gray-200">
+                  <div className="flex justify-between text-sm">
+                    <span className="underline">KSh {selectedProperty.dailyRate} × {nights} {nights === 1 ? 'night' : 'nights'}</span>
+                    <span>KSh {fees.subtotal.toLocaleString()}</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span className="underline">Service fee</span>
+                    <span>KSh {fees.guestFee.toLocaleString()}</span>
+                  </div>
+                  <div className="flex justify-between font-semibold pt-3 border-t border-gray-200">
+                    <span>Total</span>
+                    <span>KSh {fees.total.toLocaleString()}</span>
+                  </div>
+                </div>
+              )}
+
+              {/* Reserve Button */}
+              <button
+                onClick={async () => {
+                  if (!bookingDetails.checkIn || !bookingDetails.checkOut) {
+                    alert('Please select check-in and check-out dates');
+                    return;
+                  }
+                  if (nights <= 0) {
+                    alert('Check-out date must be after check-in date');
+                    return;
+                  }
+                  
+                  if (!bookingDetails.customerEmail) {
+                    const email = prompt('Please enter your email address:');
+                    if (!email) return;
+                    setBookingDetails({...bookingDetails, customerEmail: email});
+                  }
+                  
+                  setIsProcessingPayment(true);
+                  
+                  try {
+                    const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+                    
+                    const response = await fetch(`${API_BASE_URL}/api/pesapal/initiate`, {
+                      method: 'POST',
+                      headers: { 'Content-Type': 'application/json' },
+                      body: JSON.stringify({
+                        propertyId: selectedProperty.id,
+                        checkIn: bookingDetails.checkIn,
+                        checkOut: bookingDetails.checkOut,
+                        guests: bookingDetails.guests,
+                        baseAmount: selectedProperty.dailyRate,
+                        nights: nights,
+                        customerEmail: bookingDetails.customerEmail || 'guest@myhost.com',
+                        customerPhone: bookingDetails.customerPhone || null,
+                        customerFirstName: bookingDetails.customerFirstName || 'Guest',
+                        customerLastName: bookingDetails.customerLastName || 'User'
+                      })
+                    });
+                    
+                    const data = await response.json();
+                    
+                    if (data.success && data.redirectUrl) {
+                      window.location.href = data.redirectUrl;
+                    } else {
+                      throw new Error(data.error || 'Failed to initiate payment');
+                    }
+                  } catch (error) {
+                    console.error('Payment error:', error);
+                    alert(`Payment error: ${error.message}\n\nMake sure the backend server is running.`);
+                    setIsProcessingPayment(false);
+                  }
+                }}
+                disabled={isProcessingPayment}
+                className="w-full bg-rose-500 text-white py-3 rounded-lg font-semibold hover:bg-rose-600 transition disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {isProcessingPayment ? 'Processing...' : 'Reserve'}
+              </button>
+
+              <p className="text-xs text-center text-gray-600 mt-4">
+                You won't be charged yet
+              </p>
             </div>
           </div>
         </div>
@@ -620,64 +868,20 @@ const MyHostApp = () => {
   );
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <nav className="bg-white shadow-md">
-        <div className="max-w-7xl mx-auto px-4 py-4">
-          <div className="flex justify-between items-center">
-            <div className="flex items-center space-x-3">
-              <Logo size={40} color="#FB923C" />
-              <span className="text-2xl font-serif">
-                <span className="text-gray-700 font-bold">My</span>
-                <span className="text-orange-500 font-bold">Host</span>
-              </span>
-            </div>
-            
-            <div className="hidden md:flex space-x-6">
-              <button onClick={() => setCurrentPage('home')} className={`${currentPage === 'home' ? 'text-red-600 font-semibold' : 'text-gray-600'} hover:text-red-600 transition`}>
-                Home
-              </button>
-              <button onClick={() => setCurrentPage('properties')} className={`${currentPage === 'properties' ? 'text-red-600 font-semibold' : 'text-gray-600'} hover:text-red-600 transition`}>
-                Properties
-              </button>
-              <button onClick={() => setCurrentPage('host')} className={`${currentPage === 'host' ? 'text-red-600 font-semibold' : 'text-gray-600'} hover:text-red-600 transition`}>
-                Become a Host 
-              </button>
-            </div>
-
-            <button className="md:hidden" onClick={() => setMenuOpen(!menuOpen)}>
-              {menuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-            </button>
-          </div>
-
-          {menuOpen && (
-            <div className="md:hidden mt-4 space-y-2">
-              <button onClick={() => {setCurrentPage('home'); setMenuOpen(false);}} className="block w-full text-left py-2 text-gray-600">Home</button>
-              <button onClick={() => {setCurrentPage('properties'); setMenuOpen(false);}} className="block w-full text-left py-2 text-gray-600">Properties</button>
-              <button onClick={() => {setCurrentPage('host'); setMenuOpen(false);}} className="block w-full text-left py-2 text-gray-600">Become a Host</button>
-            </div>
-          )}
-        </div>
-      </nav>
-
-      <main className="max-w-7xl mx-auto px-4 py-8">
+    <div className="min-h-screen bg-white">
+      <Header />
+      
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {currentPage === 'home' && <HomePage />}
-        {currentPage === 'properties' && <PropertiesPage />}
+        {currentPage === 'properties' && <HomePage />}
         {currentPage === 'details' && <PropertyDetails />}
         {currentPage === 'host' && <HostDashboard />}
       </main>
-
-      <footer className="bg-gradient-to-r from-red-500 via-red-400 to-orange-400 text-white mt-16 py-8">
-        <div className="max-w-7xl mx-auto px-4 text-center">
-          <div className="mx-auto mb-4 flex justify-center">
-            <Logo size={60} color="white" />
-          </div>
-          <p className="text-lg">&copy; 2025 MyHost - Connecting countryside travelers with homely accommodation</p>
-        </div>
-      </footer>
     </div>
   );
 };
 
 export default MyHostApp;
+
 
 
