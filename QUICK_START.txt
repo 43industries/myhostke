@@ -1,0 +1,74 @@
+╔══════════════════════════════════════════════════════════════╗
+║                  MyHost - Quick Start Guide                  ║
+╚══════════════════════════════════════════════════════════════╝
+
+👋 Hi! Thanks for downloading MyHost!
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📋 WHAT YOU NEED FIRST
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ Node.js (v16 or higher)
+   Download from: https://nodejs.org/
+   
+   Not sure if you have it? Open terminal and type:
+   > node --version
+   
+   If you see a version number, you're good!
+   If not, install Node.js first.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🚀 HOW TO RUN (3 STEPS)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1️⃣  Open Terminal/Command Prompt in this folder
+   
+   Windows: Shift + Right-click → "Open PowerShell window here"
+   Mac/Linux: Right-click → "Open Terminal here"
+
+2️⃣  Install dependencies (FIRST TIME ONLY):
+   
+   > npm install
+   
+   Wait 2-5 minutes for this to complete.
+
+3️⃣  Run the app:
+   
+   > npm run dev
+   
+   Then open your browser and go to:
+   http://localhost:3000
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🛑 TO STOP THE APP
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Press Ctrl + C in the terminal
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+❓ NEED MORE HELP?
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📖 Detailed instructions: See SETUP.md
+🌐 Deploy to internet: See DEPLOYMENT_GUIDE.md
+📚 Full documentation: See README.md
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🐛 COMMON PROBLEMS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+❌ "npm is not recognized"
+   → Install Node.js from https://nodejs.org/
+
+❌ "Port 3000 already in use"
+   → Change port in vite.config.js or close other apps
+
+❌ Blank page
+   → Check browser console (F12) for errors
+   → Try Ctrl+Shift+R to hard refresh
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+That's it! Enjoy using MyHost! 🎉
+
+
