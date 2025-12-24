@@ -339,7 +339,7 @@ const MyHostApp = () => {
   const Header = () => (
     <header className="sticky top-0 z-50 bg-white border-b-4 border-[var(--logo-primary)] shadow-xl">
       <div className="max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
-        <div className="flex items-center justify-between h-40 md:h-48">
+        <div className="flex items-center justify-between h-16 md:h-20">
           {/* Premium Logo */}
           <div 
             className="flex items-center cursor-pointer group"
@@ -348,7 +348,7 @@ const MyHostApp = () => {
             <img 
               src="/myhost-logo.png" 
               alt="MyHost Logo" 
-              className="h-20 md:h-28 w-auto mr-4 group-hover:scale-110 transition-transform duration-300"
+              className="h-8 md:h-10 w-auto mr-2 group-hover:scale-110 transition-transform duration-300"
               onError={(e) => {
                 // Try alternative path
                 if (e.target.src.includes('/myhost-logo.png')) {
@@ -370,9 +370,9 @@ const MyHostApp = () => {
 
           {/* Welcoming Search Bar - Airbnb Style - Bigger - Enhanced */}
           {currentPage === 'home' && (
-            <div className="hidden md:flex flex-1 max-w-4xl mx-8 relative">
+            <div className="hidden md:flex flex-1 max-w-4xl mx-6 relative">
               <div 
-                className={`flex items-center w-full bg-gradient-to-r from-white/95 via-[var(--logo-primary)]/5 to-white/95 backdrop-blur-sm border-2 border-[var(--logo-primary)]/30 rounded-full px-8 py-5 transition-all hover:scale-105 ${
+                className={`flex items-center w-full bg-gradient-to-r from-white/95 via-[var(--logo-primary)]/5 to-white/95 backdrop-blur-sm border-2 border-[var(--logo-primary)]/30 rounded-full px-6 py-3 transition-all hover:scale-105 ${
                   searchFocused 
                     ? 'border-[var(--logo-primary)] shadow-2xl shadow-[var(--logo-primary)]/20' 
                     : 'border-gray-300 hover:shadow-xl hover:border-[var(--logo-primary)]'
@@ -383,7 +383,7 @@ const MyHostApp = () => {
                 }}
               >
                 <div className="flex items-center flex-1">
-                  <Search className="w-6 h-6 text-[var(--logo-primary)] mr-4 flex-shrink-0" />
+                  <Search className="w-5 h-5 text-[var(--logo-primary)] mr-3 flex-shrink-0" />
                   <div className="flex-1 relative">
                     <div className="text-sm font-semibold text-gray-900 mb-1">Where to?</div>
                   <input
@@ -429,19 +429,19 @@ const MyHostApp = () => {
                     </button>
                   )}
                 </div>
-                <div className="flex items-center space-x-8 ml-8 text-gray-600 border-l border-gray-300 pl-8">
+                <div className="flex items-center space-x-4 ml-6 text-gray-600 border-l border-gray-300 pl-4">
                   <div 
-                    className="flex items-center space-x-2 cursor-pointer hover:bg-gray-50 rounded-lg px-4 py-2 -mx-4 -my-2 transition-colors relative group"
+                    className="flex items-center space-x-2 cursor-pointer hover:bg-gray-50 rounded-lg px-3 py-1.5 -mx-3 -my-1.5 transition-colors relative group"
                     onClick={(e) => {
                       e.stopPropagation();
                       setSelectedDateType('checkIn');
                       setShowDatePicker(true);
                     }}
                   >
-                    <Calendar className="w-5 h-5 text-[var(--logo-primary)]" />
-                    <div className="flex flex-col">
-                      <div className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-0.5">Check in</div>
-                      <div className={`text-base font-semibold ${bookingForm.checkIn ? 'text-gray-900' : 'text-gray-400'}`}>
+                    <Calendar className="w-4 h-4 text-[var(--logo-primary)] flex-shrink-0" />
+                    <div className="flex flex-row items-center space-x-2">
+                      <div className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Check in:</div>
+                      <div className={`text-sm font-semibold ${bookingForm.checkIn ? 'text-gray-900' : 'text-gray-400'}`}>
                         {bookingForm.checkIn ? new Date(bookingForm.checkIn).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : 'Add date'}
                       </div>
                     </div>
@@ -478,7 +478,7 @@ const MyHostApp = () => {
                     )}
                   </div>
                   <div 
-                    className="flex items-center space-x-2 cursor-pointer hover:bg-gray-50 rounded-lg px-4 py-2 -mx-4 -my-2 transition-colors relative group"
+                    className="flex items-center space-x-2 cursor-pointer hover:bg-gray-50 rounded-lg px-3 py-1.5 -mx-3 -my-1.5 transition-colors relative group"
                     onClick={(e) => {
                       e.stopPropagation();
                       if (!bookingForm.checkIn) {
@@ -491,10 +491,10 @@ const MyHostApp = () => {
                       setShowDatePicker(true);
                     }}
                   >
-                    <Calendar className="w-5 h-5 text-[var(--logo-primary)]" />
-                    <div className="flex flex-col">
-                      <div className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-0.5">Check out</div>
-                      <div className={`text-base font-semibold ${bookingForm.checkOut ? 'text-gray-900' : 'text-gray-400'}`}>
+                    <Calendar className="w-4 h-4 text-[var(--logo-primary)] flex-shrink-0" />
+                    <div className="flex flex-row items-center space-x-2">
+                      <div className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Check out:</div>
+                      <div className={`text-sm font-semibold ${bookingForm.checkOut ? 'text-gray-900' : 'text-gray-400'}`}>
                         {bookingForm.checkOut ? new Date(bookingForm.checkOut).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : 'Add date'}
                       </div>
                     </div>
@@ -558,7 +558,7 @@ const MyHostApp = () => {
                     )}
                 </div>
                   <div 
-                    className="flex items-center space-x-2 bg-orange-600 text-white rounded-full px-6 py-3 hover:bg-orange-700 transition-all cursor-pointer shadow-lg hover:shadow-xl hover:scale-105 border-2 border-orange-700"
+                    className="flex items-center space-x-2 bg-orange-600 text-white rounded-full px-4 py-2 hover:bg-orange-700 transition-all cursor-pointer shadow-lg hover:shadow-xl hover:scale-105 border-2 border-orange-700"
                     onClick={(e) => {
                       e.stopPropagation();
                       setShowDatePicker(false);
@@ -566,8 +566,8 @@ const MyHostApp = () => {
                       handleSearchClick();
                     }}
                   >
-                  <Search className="w-5 h-5" />
-                    <span className="text-base font-semibold">Search</span>
+                  <Search className="w-4 h-4" />
+                    <span className="text-sm font-semibold">Search</span>
                   </div>
                 </div>
               </div>
@@ -675,18 +675,18 @@ const MyHostApp = () => {
                 setCurrentPage('host');
               }}
               type="button"
-              className="flex items-center space-x-3 px-6 md:px-10 py-4 md:py-5 text-base md:text-lg font-extrabold bg-orange-600 text-white rounded-full hover:bg-orange-700 transition-all duration-300 shadow-xl hover:shadow-2xl hover:scale-105 active:scale-95 cursor-pointer border-4 border-orange-700"
-              style={{ minWidth: '160px', display: 'flex', boxShadow: '0 4px 20px rgba(0, 0, 0, 0.3)' }}
+              className="flex items-center space-x-1.5 px-3 md:px-4 py-1.5 md:py-2 text-xs md:text-sm font-extrabold bg-orange-600 text-white rounded-full hover:bg-orange-700 transition-all duration-300 shadow-xl hover:shadow-2xl hover:scale-105 active:scale-95 cursor-pointer border-2 border-orange-700"
+              style={{ minWidth: '120px', display: 'flex', boxShadow: '0 4px 20px rgba(0, 0, 0, 0.3)' }}
             >
-              <Plus className="w-5 h-5 md:w-6 md:h-6 text-black" />
+              <Plus className="w-3 h-3 md:w-4 md:h-4 text-black" />
               <span className="whitespace-nowrap text-black">Become a Host</span>
             </button>
             <button 
               onClick={() => setShowNotifications(!showNotifications)}
-              className="flex items-center justify-center w-16 h-16 md:w-20 md:h-20 text-orange-600 hover:text-white bg-white hover:bg-orange-600 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-110 active:scale-95 border-4 border-orange-600 relative group"
+              className="flex items-center justify-center w-9 h-9 md:w-10 md:h-10 text-orange-600 hover:text-white bg-white hover:bg-orange-600 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-110 active:scale-95 border-2 border-orange-600 relative group"
               style={{ boxShadow: '0 2px 10px rgba(251, 146, 60, 0.3)' }}
             >
-              <Bell className={`w-7 h-7 md:w-8 md:h-8 text-orange-600 group-hover:text-white transition-all duration-300 ${showNotifications ? 'animate-pulse' : 'group-hover:scale-110'}`} />
+              <Bell className={`w-4 h-4 md:w-5 md:h-5 text-orange-600 group-hover:text-white transition-all duration-300 ${showNotifications ? 'animate-pulse' : 'group-hover:scale-110'}`} />
               {showNotifications && (
                 <div className="absolute top-full right-0 mt-3 bg-gradient-to-br from-white via-[var(--logo-primary)]/5 to-white backdrop-blur-md border-2 border-[var(--logo-primary)] rounded-2xl shadow-2xl z-50 p-5 min-w-[320px] animate-in fade-in slide-in-from-top-2">
                   <div className="flex items-center justify-between mb-4">
@@ -716,10 +716,10 @@ const MyHostApp = () => {
                   alert('You have no favorite properties yet');
                 }
               }}
-              className="flex items-center justify-center w-16 h-16 md:w-20 md:h-20 text-orange-600 hover:text-white bg-white hover:bg-orange-600 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-110 active:scale-95 border-4 border-orange-600 relative group"
+              className="flex items-center justify-center w-9 h-9 md:w-10 md:h-10 text-orange-600 hover:text-white bg-white hover:bg-orange-600 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-110 active:scale-95 border-2 border-orange-600 relative group"
               style={{ boxShadow: '0 2px 10px rgba(251, 146, 60, 0.3)' }}
             >
-              <Heart className={`w-7 h-7 md:w-8 md:h-8 text-orange-600 group-hover:text-white transition-all duration-300 ${favorites.size > 0 ? 'fill-orange-600 text-orange-600 scale-110' : 'group-hover:scale-110'}`} />
+              <Heart className={`w-4 h-4 md:w-5 md:h-5 text-orange-600 group-hover:text-white transition-all duration-300 ${favorites.size > 0 ? 'fill-orange-600 text-orange-600 scale-110' : 'group-hover:scale-110'}`} />
               {favorites.size > 0 && (
                 <span className="absolute -top-1 -right-1 bg-gradient-to-r from-[var(--logo-primary)] to-[var(--logo-accent)] text-white text-xs rounded-full w-6 h-6 flex items-center justify-center font-bold shadow-lg animate-pulse">
                   {favorites.size}
@@ -728,11 +728,11 @@ const MyHostApp = () => {
             </button>
             <button 
               onClick={() => setShowUserMenu(!showUserMenu)}
-              className="flex items-center space-x-3 px-6 py-4 md:px-8 md:py-5 bg-white border-4 border-orange-600 rounded-full hover:border-orange-700 hover:bg-orange-600 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 active:scale-95 relative group"
+              className="flex items-center space-x-1.5 px-3 py-1.5 md:px-4 md:py-2 bg-white border-2 border-orange-600 rounded-full hover:border-orange-700 hover:bg-orange-600 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 active:scale-95 relative group"
               style={{ boxShadow: '0 2px 10px rgba(251, 146, 60, 0.3)' }}
             >
-              <Menu className={`w-6 h-6 md:w-7 md:h-7 text-orange-600 group-hover:text-white transition-colors duration-300 ${showUserMenu ? 'text-white' : ''}`} />
-              <User className={`w-6 h-6 md:w-7 md:h-7 text-orange-600 group-hover:text-white transition-colors duration-300 ${showUserMenu ? 'text-white' : ''}`} />
+              <Menu className={`w-4 h-4 md:w-4 md:h-4 text-orange-600 group-hover:text-white transition-colors duration-300 ${showUserMenu ? 'text-white' : ''}`} />
+              <User className={`w-4 h-4 md:w-4 md:h-4 text-orange-600 group-hover:text-white transition-colors duration-300 ${showUserMenu ? 'text-white' : ''}`} />
               {showUserMenu && (
                 <div className="absolute top-full right-0 mt-2 bg-gradient-to-br from-white via-[var(--logo-primary)]/5 to-white backdrop-blur-md border-2 border-[var(--logo-primary)]/30 rounded-xl shadow-2xl z-50 p-2 min-w-[200px]">
                   {currentUser ? (
@@ -795,7 +795,7 @@ const MyHostApp = () => {
     const maxPrice = 20000;
     
     return (
-      <div className="sticky top-40 md:top-48 z-40 bg-gradient-to-r from-[var(--logo-primary)]/90 via-[var(--logo-secondary)]/90 to-[var(--logo-primary)]/90 backdrop-blur-md border-b border-[var(--logo-primary)]/20 shadow-md">
+      <div className="sticky top-16 md:top-20 z-40 bg-gradient-to-r from-[var(--logo-primary)]/90 via-[var(--logo-secondary)]/90 to-[var(--logo-primary)]/90 backdrop-blur-md border-b border-[var(--logo-primary)]/20 shadow-md">
         <div className="max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
           <div className="flex items-center space-x-2 py-2.5 overflow-x-auto">
             {/* Price Filter */}
@@ -1205,8 +1205,8 @@ const MyHostApp = () => {
   // Welcoming Home Page - Airbnb Style
   const HomePage = () => (
     <div className="pb-12">
-      {/* Welcoming Hero Section - Premium - Bigger with Sunset Savanna Background */}
-      <div className="relative w-full min-h-[95vh] flex items-center justify-center overflow-hidden">
+      {/* Hero Section with Search Bar Overlay */}
+      <div className="relative w-full min-h-[85vh] flex flex-col items-center justify-center overflow-hidden">
         {/* Background Image with Overlay */}
         <div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
@@ -1215,28 +1215,195 @@ const MyHostApp = () => {
           }}
         >
           {/* Dark overlay for text readability */}
-          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/50 to-black/70"></div>
-          {/* Warm sunset overlay to match the image */}
-          <div className="absolute inset-0 bg-gradient-to-t from-orange-900/40 via-transparent to-yellow-500/20"></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/40 to-black/60"></div>
         </div>
         
-        {/* Content */}
-                  <div className="relative z-10 max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 py-32 w-full">
-                    <div className="text-center mb-20">
-                      <h1 className="text-7xl md:text-8xl lg:text-9xl font-extrabold mb-12 leading-tight tracking-tight text-white drop-shadow-2xl float-animation">
-                        Welcome to MyHost! 🏡
-                      </h1>
-                      <p className="text-3xl md:text-4xl lg:text-5xl text-white/95 mb-8 max-w-5xl mx-auto leading-relaxed font-light drop-shadow-xl">
-                        Alternative accommodation for countryside travelers in homely settings that deliver urban ambience in a rural setting
-                      </p>
-                      <p className="text-2xl md:text-3xl text-white/90 mb-14 max-w-4xl mx-auto leading-relaxed drop-shadow-lg">
-                        Connect with homeowners offering unmatched budget accommodation in the countryside. Experience modern, magnificent houses managed by caretakers, perfect for short and long-term stays.
-                      </p>
-            <div className="flex items-center justify-center space-x-2 px-8 py-4 border-2 border-white/40 rounded-full bg-white/20 backdrop-blur-md inline-flex shadow-2xl hover:shadow-3xl hover:scale-105 transition-all">
-              <Star className="w-6 h-6 text-yellow-300 fill-yellow-300 animate-pulse" />
-              <span className="text-base font-bold text-white">
-                Budget-friendly • No hidden charges • Caretaker-managed properties
-              </span>
+        {/* Hero Content */}
+        <div className="relative z-10 w-full max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
+          {/* Hero Text */}
+          <div className="text-center mb-12">
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold mb-6 leading-tight tracking-tight text-white drop-shadow-2xl">
+              Find your perfect stay
+            </h1>
+            <p className="text-xl md:text-2xl lg:text-3xl text-white/95 mb-8 max-w-3xl mx-auto leading-relaxed font-light drop-shadow-xl">
+              Discover unique places to stay in the countryside
+            </p>
+          </div>
+
+          {/* Search Bar Overlay - Prominent Horizontal Layout */}
+          <div className="max-w-6xl mx-auto">
+            <div className="bg-white rounded-2xl shadow-2xl p-4 md:p-6">
+              <div className="flex flex-col md:flex-row items-stretch gap-2 md:gap-0">
+                {/* WHERE Field */}
+                <div className="flex-1 border-r-0 md:border-r border-gray-200 pr-0 md:pr-4">
+                  <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wide mb-2">WHERE</label>
+                  <input
+                    type="text"
+                    placeholder="Nairobi"
+                    value={bookingForm.location || searchQuery}
+                    onChange={(e) => {
+                      setBookingForm({...bookingForm, location: e.target.value});
+                      setSearchQuery(e.target.value);
+                    }}
+                    className="w-full border-none outline-none text-base text-gray-900 placeholder-gray-400 bg-transparent"
+                  />
+                </div>
+
+                {/* CHECK IN Field */}
+                <div className="flex-1 border-r-0 md:border-r border-gray-200 pr-0 md:pr-4 relative">
+                  <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wide mb-2">CHECK IN</label>
+                  <div 
+                    className="flex items-center space-x-2 cursor-pointer"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setSelectedDateType('checkIn');
+                      setShowDatePicker(true);
+                    }}
+                  >
+                    <Calendar className="w-4 h-4 text-gray-400 flex-shrink-0" />
+                    <input
+                      type="text"
+                      placeholder="dd/mm/yyyy"
+                      value={bookingForm.checkIn ? new Date(bookingForm.checkIn).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' }) : ''}
+                      readOnly
+                      className="w-full border-none outline-none text-base text-gray-900 placeholder-gray-400 bg-transparent cursor-pointer"
+                    />
+                  </div>
+                  {showDatePicker && selectedDateType === 'checkIn' && (
+                    <div className="absolute top-full left-0 mt-2 bg-white border-2 border-gray-300 rounded-xl shadow-2xl z-[60] p-4 min-w-[300px]" onClick={(e) => e.stopPropagation()}>
+                      <div className="flex items-center justify-between mb-3">
+                        <label className="block text-sm font-semibold text-gray-900">Select Check-in Date</label>
+                        <button
+                          onClick={() => {
+                            setShowDatePicker(false);
+                            setSelectedDateType(null);
+                          }}
+                          className="text-gray-400 hover:text-gray-600"
+                        >
+                          <X className="w-4 h-4" />
+                        </button>
+                      </div>
+                      <input
+                        type="date"
+                        min={new Date().toISOString().split('T')[0]}
+                        value={bookingForm.checkIn}
+                        onChange={(e) => {
+                          setBookingForm({...bookingForm, checkIn: e.target.value});
+                          if (e.target.value && bookingForm.checkOut && e.target.value >= bookingForm.checkOut) {
+                            setBookingForm({...bookingForm, checkIn: e.target.value, checkOut: ''});
+                          }
+                          setShowDatePicker(false);
+                          setSelectedDateType(null);
+                        }}
+                        className="w-full text-lg p-3 border-2 border-gray-300 rounded-lg focus:border-[var(--logo-primary)] focus:ring-2 focus:ring-[var(--logo-primary)] outline-none"
+                        autoFocus
+                      />
+                    </div>
+                  )}
+                </div>
+
+                {/* CHECK OUT Field */}
+                <div className="flex-1 border-r-0 md:border-r border-gray-200 pr-0 md:pr-4 relative">
+                  <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wide mb-2">CHECK OUT</label>
+                  <div 
+                    className="flex items-center space-x-2 cursor-pointer"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      if (!bookingForm.checkIn) {
+                        alert('Please select check-in date first');
+                        return;
+                      }
+                      setSelectedDateType('checkOut');
+                      setShowDatePicker(true);
+                    }}
+                  >
+                    <Calendar className="w-4 h-4 text-gray-400 flex-shrink-0" />
+                    <input
+                      type="text"
+                      placeholder="dd/mm/yyyy"
+                      value={bookingForm.checkOut ? new Date(bookingForm.checkOut).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' }) : ''}
+                      readOnly
+                      className="w-full border-none outline-none text-base text-gray-900 placeholder-gray-400 bg-transparent cursor-pointer"
+                    />
+                  </div>
+                  {showDatePicker && selectedDateType === 'checkOut' && bookingForm.checkIn && (
+                    <div className="absolute top-full left-0 mt-2 bg-white border-2 border-gray-300 rounded-xl shadow-2xl z-[60] p-4 min-w-[300px]" onClick={(e) => e.stopPropagation()}>
+                      <div className="flex items-center justify-between mb-3">
+                        <label className="block text-sm font-semibold text-gray-900">Select Check-out Date</label>
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setShowDatePicker(false);
+                            setSelectedDateType(null);
+                          }}
+                          className="text-gray-400 hover:text-gray-600"
+                        >
+                          <X className="w-4 h-4" />
+                        </button>
+                      </div>
+                      {bookingForm.checkIn && (
+                        <p className="text-xs text-gray-600 mb-2 bg-gray-50 p-2 rounded">
+                          Check-in: {new Date(bookingForm.checkIn).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
+                        </p>
+                      )}
+                      <input
+                        type="date"
+                        min={bookingForm.checkIn ? (() => {
+                          const checkInDate = new Date(bookingForm.checkIn);
+                          checkInDate.setDate(checkInDate.getDate() + 1);
+                          return checkInDate.toISOString().split('T')[0];
+                        })() : new Date().toISOString().split('T')[0]}
+                        value={bookingForm.checkOut || ''}
+                        onChange={(e) => {
+                          e.stopPropagation();
+                          const selectedDate = e.target.value;
+                          if (selectedDate && bookingForm.checkIn) {
+                            const checkIn = new Date(bookingForm.checkIn);
+                            const checkOut = new Date(selectedDate);
+                            if (checkOut <= checkIn) {
+                              alert('Check-out date must be after check-in date');
+                              return;
+                            }
+                          }
+                          setBookingForm({...bookingForm, checkOut: selectedDate});
+                          setShowDatePicker(false);
+                          setSelectedDateType(null);
+                        }}
+                        className="w-full text-lg p-3 border-2 border-gray-300 rounded-lg focus:border-[var(--logo-primary)] focus:ring-2 focus:ring-[var(--logo-primary)] outline-none"
+                        autoFocus
+                      />
+                    </div>
+                  )}
+                </div>
+
+                {/* GUESTS Field */}
+                <div className="flex-1 border-r-0 md:border-r border-gray-200 pr-0 md:pr-4">
+                  <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wide mb-2">GUESTS</label>
+                  <input
+                    type="number"
+                    min="1"
+                    placeholder="2"
+                    value={bookingForm.guests || 2}
+                    onChange={(e) => setBookingForm({...bookingForm, guests: parseInt(e.target.value) || 1})}
+                    className="w-full border-none outline-none text-base text-gray-900 placeholder-gray-400 bg-transparent"
+                  />
+                </div>
+
+                {/* Search Button */}
+                <div className="flex items-end">
+                  <button
+                    onClick={() => {
+                      setShowDatePicker(false);
+                      setShowSearchSuggestions(false);
+                      handleSearchClick();
+                    }}
+                    className="w-full md:w-auto bg-red-600 hover:bg-red-700 text-white rounded-full px-8 py-4 md:py-3 flex items-center justify-center space-x-2 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 active:scale-95"
+                  >
+                    <Search className="w-5 h-5" />
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -1831,21 +1998,21 @@ const MyHostApp = () => {
           </div>
 
           {/* Call to Action */}
-          <div className="mt-16 text-center">
-            <div className="inline-block p-8 bg-gray-50 rounded-2xl border-2 border-gray-200">
-              <p className="text-lg text-gray-700 mb-4">
+          <div className="mt-16 text-center bg-orange-500 py-16 px-4">
+            <div className="max-w-4xl mx-auto">
+              <p className="text-lg text-white mb-4 font-semibold">
                 Ready to get started?
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <button 
                   onClick={() => setCurrentPage('host')}
-                  className="px-8 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors"
+                  className="px-8 py-3 bg-white text-orange-600 rounded-lg font-semibold hover:bg-gray-100 transition-colors"
                 >
                   List Your Property
                 </button>
                 <button 
                   onClick={() => setCurrentPage('properties')}
-                  className="px-8 py-3 bg-white border-2 border-gray-300 text-gray-700 rounded-lg font-semibold hover:border-gray-400 transition-colors"
+                  className="px-8 py-3 bg-orange-600 border-2 border-white text-white rounded-lg font-semibold hover:bg-orange-700 transition-colors"
                 >
                   Browse Properties
                 </button>
