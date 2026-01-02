@@ -364,11 +364,11 @@ const MyHostApp = () => {
                 }
               }}
             />
+            <span className="text-xl md:text-2xl font-bold text-[var(--logo-primary)]">MyHost</span>
             <div className="hidden items-center">
               <div className="w-10 h-10 bg-gradient-to-br from-[var(--logo-primary)] via-[var(--logo-secondary)] to-[var(--logo-accent)] rounded-xl flex items-center justify-center mr-3 shadow-lg group-hover:scale-110 transition-transform duration-300" style={{boxShadow: '0 0 20px rgba(var(--logo-primary-rgb, 26, 115, 232), 0.3)'}}>
                 <Home className="w-6 h-6 text-white" />
               </div>
-              <span className="text-2xl font-bold text-[var(--logo-primary)]">MyHost</span>
             </div>
           </div>
 
@@ -917,7 +917,7 @@ const MyHostApp = () => {
         <div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
-            backgroundImage: 'url(https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=1920&h=1080&fit=crop&q=80)',
+            backgroundImage: 'url(https://images.unsplash.com/photo-1499793983690-e29da59ef1c2?w=1920&h=1080&fit=crop&q=80)',
           }}
         >
           {/* Dark overlay for text readability */}
@@ -1601,114 +1601,68 @@ const MyHostApp = () => {
         </div>
       </div>
 
-      {/* How It Works - Welcoming Section */}
-      <div className="bg-white py-16">
+      {/* How It Works - Combined Section */}
+      <div className="bg-white py-12">
         <div className="max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+          <div className="text-center mb-8">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
               How it works 🏡
-          </h2>
-            <p className="text-xl text-gray-600">Getting started is easy! Here's how you can begin your journey with us</p>
-        </div>
-
-          {/* For Hosts Section */}
-          <div className="mb-16">
-            <div className="flex items-center mb-8">
-              <div className="w-14 h-14 bg-blue-600 rounded-xl flex items-center justify-center mr-4">
-                <Home className="w-7 h-7 text-white" />
-                </div>
-              <h3 className="text-3xl font-bold text-gray-900">For Hosts</h3>
-              </div>
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {[
-                { 
-                  step: "1", 
-                  title: "List Your Property", 
-                  description: "Create a detailed listing with photos, amenities, and pricing. It takes just a few minutes.",
-                  icon: Home
-                },
-                { 
-                  step: "2", 
-                  title: "Set Your Availability", 
-                  description: "Choose when your property is available. You control your calendar completely.",
-                  icon: Calendar
-                },
-                { 
-                  step: "3", 
-                  title: "Receive Bookings", 
-                  description: "Get instant notifications when guests book. Accept or decline requests easily.",
-                  icon: Bell
-                },
-                { 
-                  step: "4", 
-                  title: "Get Paid Securely", 
-                  description: "Receive payments directly to your account. We handle all transactions safely.",
-                  icon: Shield
-                }
-                ].map((item, idx) => (
-                <div key={idx} className="p-6 border border-gray-200 rounded-xl hover:shadow-lg transition-all group">
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center group-hover:bg-blue-600 transition-colors">
-                      <item.icon className="w-6 h-6 text-blue-600 group-hover:text-white transition-colors" />
-                    </div>
-                    <span className="text-3xl font-bold text-gray-300 group-hover:text-blue-600 transition-colors">{item.step}</span>
-                  </div>
-                  <h4 className="text-lg font-bold text-gray-900 mb-2">{item.title}</h4>
-                  <p className="text-sm text-gray-600 leading-relaxed">{item.description}</p>
-                </div>
-              ))}
-            </div>
+            </h2>
+            <p className="text-lg text-gray-600">Simple steps for hosts and travelers</p>
           </div>
-          
-          {/* For Travelers Section */}
-          <div>
-            <div className="flex items-center mb-8">
-              <div className="w-14 h-14 bg-green-600 rounded-xl flex items-center justify-center mr-4">
-                <Users className="w-7 h-7 text-white" />
+
+          {/* Combined Grid - Hosts and Travelers */}
+          <div className="grid md:grid-cols-2 gap-8">
+            {/* For Hosts */}
+            <div className="bg-blue-50 rounded-xl p-6">
+              <div className="flex items-center mb-4">
+                <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center mr-3">
+                  <Home className="w-5 h-5 text-white" />
                 </div>
-              <div>
-                <h3 className="text-3xl font-bold text-gray-900">For Countryside Travelers</h3>
-                <p className="text-gray-600 mt-1">Find budget accommodation in homely countryside settings</p>
+                <h3 className="text-xl font-bold text-gray-900">For Hosts</h3>
+              </div>
+              <div className="space-y-3">
+                {[
+                  { step: "1", title: "List Property", description: "Create listing with photos and pricing" },
+                  { step: "2", title: "Set Availability", description: "Control your calendar" },
+                  { step: "3", title: "Receive Bookings", description: "Get instant notifications" },
+                  { step: "4", title: "Get Paid", description: "Secure payments to your account" }
+                ].map((item, idx) => (
+                  <div key={idx} className="flex items-start space-x-3">
+                    <span className="text-lg font-bold text-blue-600">{item.step}</span>
+                    <div>
+                      <h4 className="font-semibold text-gray-900 text-sm">{item.title}</h4>
+                      <p className="text-xs text-gray-600">{item.description}</p>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {[
-                { 
-                  step: "1", 
-                  title: "Review Available Units", 
-                  description: "Browse countryside properties by location, dates, duration, price, and preferences. Find modern houses with urban ambience.",
-                  icon: Search
-                },
-                { 
-                  step: "2", 
-                  title: "Book & Pay", 
-                  description: "Choose your preferred unit based on location, dates, price, and amenities. Book and pay securely online.",
-                  icon: CheckCircle
-                },
-                { 
-                  step: "3", 
-                  title: "Check-In & Enjoy", 
-                  description: "Check in to your countryside accommodation. Experience homely settings with caretaker-managed properties.",
-                  icon: Star
-                },
-                { 
-                  step: "4", 
-                  title: "Review & Rate", 
-                  description: "After your stay, provide reviews and ratings for the quality of the unit and service. Help other travelers.",
-                  icon: Heart
-                }
-                ].map((item, idx) => (
-                <div key={idx} className="p-6 border border-gray-200 rounded-xl hover:shadow-lg transition-all group">
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center group-hover:bg-green-600 transition-colors">
-                      <item.icon className="w-6 h-6 text-green-600 group-hover:text-white transition-colors" />
-                    </div>
-                    <span className="text-3xl font-bold text-gray-300 group-hover:text-green-600 transition-colors">{item.step}</span>
-                  </div>
-                  <h4 className="text-lg font-bold text-gray-900 mb-2">{item.title}</h4>
-                  <p className="text-sm text-gray-600 leading-relaxed">{item.description}</p>
+
+            {/* For Travelers */}
+            <div className="bg-green-50 rounded-xl p-6">
+              <div className="flex items-center mb-4">
+                <div className="w-10 h-10 bg-green-600 rounded-lg flex items-center justify-center mr-3">
+                  <Users className="w-5 h-5 text-white" />
                 </div>
-              ))}
+                <h3 className="text-xl font-bold text-gray-900">For Travelers</h3>
+              </div>
+              <div className="space-y-3">
+                {[
+                  { step: "1", title: "Browse Properties", description: "Search by location, dates, and price" },
+                  { step: "2", title: "Book & Pay", description: "Secure online booking and payment" },
+                  { step: "3", title: "Check-In", description: "Enjoy caretaker-managed stays" },
+                  { step: "4", title: "Review", description: "Share your experience" }
+                ].map((item, idx) => (
+                  <div key={idx} className="flex items-start space-x-3">
+                    <span className="text-lg font-bold text-green-600">{item.step}</span>
+                    <div>
+                      <h4 className="font-semibold text-gray-900 text-sm">{item.title}</h4>
+                      <p className="text-xs text-gray-600">{item.description}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
 
