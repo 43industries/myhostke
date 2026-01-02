@@ -1202,7 +1202,7 @@ const MyHostApp = () => {
                 </div>
                 <div>
                   <h3 className="text-2xl font-bold mb-1 drop-shadow-lg">Host Exchange</h3>
-                  <p className="text-sm text-white/90 font-medium">Reciprocal hosting</p>
+                  <p className="text-sm text-white/90 font-medium">Same families host travelers</p>
                 </div>
               </div>
             </div>
@@ -1231,7 +1231,7 @@ const MyHostApp = () => {
                 </div>
                 <div>
                   <h3 className="text-2xl font-bold mb-1 drop-shadow-lg">Student Longstay</h3>
-                  <p className="text-sm text-white/90 font-medium">Monthly & semester stays</p>
+                  <p className="text-sm text-white/90 font-medium">Linking students to schools & property owners</p>
                 </div>
               </div>
             </div>
@@ -1459,15 +1459,14 @@ const MyHostApp = () => {
               <Users className="w-8 h-8 text-white" />
             </div>
             <h3 className="text-2xl font-extrabold mb-3 text-gray-900">Student Longstay</h3>
-            <p className="text-gray-600 leading-relaxed mb-4">Long-term budget accommodation for students who require countryside stays closer to colleges. Monthly or semester-based options available. Properties are linked to nearby schools and colleges.</p>
+            <p className="text-gray-600 leading-relaxed mb-4">Extensions linking students to schools and connecting property owners around schools with students. Monthly & semester stays for students near educational institutions.</p>
             <button 
               onClick={() => {
-                // In production, this would show a list of nearby schools/colleges
-                alert('Student Longstay properties are linked to nearby schools and colleges. When you book, you\'ll receive information about nearby educational institutions.');
+                alert('Student Longstay connects students with property owners around schools. Find accommodation near your school and get linked to nearby educational institutions.');
               }}
               className="mt-4 px-4 py-2 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition-colors text-sm font-semibold"
             >
-              View Nearby Schools
+              Find Properties Near Schools
             </button>
             <div className="flex items-center space-x-2">
               <div className="w-3 h-3 bg-gradient-to-br from-orange-500 to-rose-500 rounded-full pulse-animation"></div>
@@ -1483,8 +1482,8 @@ const MyHostApp = () => {
             <div className="w-16 h-16 bg-gradient-to-br from-[var(--logo-primary)] to-[var(--logo-accent)] rounded-2xl flex items-center justify-center mb-6 transform group-hover:rotate-6 group-hover:scale-110 transition-all duration-300">
               <Star className="w-8 h-8 text-white" />
             </div>
-            <h3 className="text-2xl font-extrabold mb-3 text-gray-900">WeHost Exchange</h3>
-            <p className="text-gray-600 leading-relaxed mb-4">Reciprocal hosting arrangements between families</p>
+            <h3 className="text-2xl font-extrabold mb-3 text-gray-900">Host Exchange</h3>
+            <p className="text-gray-600 leading-relaxed mb-4">The same families can host people traveling. Reciprocal hosting where families host each other's members when traveling.</p>
             <div className="flex items-center space-x-2">
               <div className="w-3 h-3 bg-gradient-to-br from-[var(--logo-primary)] to-[var(--logo-accent)] rounded-full pulse-animation"></div>
               <div className="w-3 h-3 bg-gradient-to-br from-orange-400 to-pink-400 rounded-full pulse-animation" style={{ animationDelay: '0.2s' }}></div>
@@ -1494,107 +1493,87 @@ const MyHostApp = () => {
         </div>
       </div>
 
-      {/* Why Choose MyHost - Welcoming Section */}
-      <div className="bg-white py-16">
+      {/* Why Choose MyHost - Compact Section */}
+      <div className="bg-white py-10">
         <div className="max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+          <div className="text-center mb-8">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
               Why choose MyHost? ✨
             </h2>
-            <p className="text-xl text-gray-600">The solution connecting countryside homeowners with travelers seeking budget accommodation in rural settings</p>
+            <p className="text-lg text-gray-600">Connecting countryside homeowners with travelers</p>
           </div>
 
-          {/* Stats Row */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16">
-            <div className="text-center p-6 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
-              <div className="w-14 h-14 bg-blue-600 rounded-xl flex items-center justify-center mx-auto mb-4">
-                <Home className="w-7 h-7 text-white" />
+          {/* Stats Row - Compact */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+            <div className="text-center p-4 bg-gray-50 rounded-lg">
+              <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center mx-auto mb-2">
+                <Home className="w-5 h-5 text-white" />
               </div>
-              <p className="text-4xl font-bold text-gray-900 mb-1">150+</p>
-              <p className="text-sm text-gray-600 font-medium">Properties</p>
+              <p className="text-2xl font-bold text-gray-900">150+</p>
+              <p className="text-xs text-gray-600">Properties</p>
             </div>
-            <div className="text-center p-6 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
-              <div className="w-14 h-14 bg-blue-600 rounded-xl flex items-center justify-center mx-auto mb-4">
-                <Users className="w-7 h-7 text-white" />
+            <div className="text-center p-4 bg-gray-50 rounded-lg">
+              <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center mx-auto mb-2">
+                <Users className="w-5 h-5 text-white" />
               </div>
-              <p className="text-4xl font-bold text-gray-900 mb-1">5,000+</p>
-              <p className="text-sm text-gray-600 font-medium">Happy Guests</p>
+              <p className="text-2xl font-bold text-gray-900">5,000+</p>
+              <p className="text-xs text-gray-600">Guests</p>
             </div>
-            <div className="text-center p-6 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
-              <div className="w-14 h-14 bg-blue-600 rounded-xl flex items-center justify-center mx-auto mb-4">
-                <MapPin className="w-7 h-7 text-white" />
+            <div className="text-center p-4 bg-gray-50 rounded-lg">
+              <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center mx-auto mb-2">
+                <MapPin className="w-5 h-5 text-white" />
               </div>
-              <p className="text-4xl font-bold text-gray-900 mb-1">20+</p>
-              <p className="text-sm text-gray-600 font-medium">Locations</p>
+              <p className="text-2xl font-bold text-gray-900">20+</p>
+              <p className="text-xs text-gray-600">Locations</p>
             </div>
-            <div className="text-center p-6 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
-              <div className="w-14 h-14 bg-blue-600 rounded-xl flex items-center justify-center mx-auto mb-4">
-                <Star className="w-7 h-7 text-white fill-white" />
+            <div className="text-center p-4 bg-gray-50 rounded-lg">
+              <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center mx-auto mb-2">
+                <Star className="w-5 h-5 text-white fill-white" />
               </div>
-              <p className="text-4xl font-bold text-gray-900 mb-1">4.8</p>
-              <p className="text-sm text-gray-600 font-medium">Avg Rating</p>
+              <p className="text-2xl font-bold text-gray-900">4.8</p>
+              <p className="text-xs text-gray-600">Rating</p>
             </div>
           </div>
 
-          {/* Key Benefits Grid */}
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="p-8 border border-gray-200 rounded-xl hover:shadow-lg transition-shadow">
-              <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4">
-                <Shield className="w-6 h-6 text-green-600" />
-        </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">Secure Payments</h3>
-              <p className="text-gray-600 leading-relaxed">
-                All transactions are protected with industry-standard encryption. Your money is safe with our secure payment system.
-              </p>
-      </div>
-
-            <div className="p-8 border border-gray-200 rounded-xl hover:shadow-lg transition-shadow">
-              <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
-                <CheckCircle className="w-6 h-6 text-blue-600" />
+          {/* Key Benefits Grid - Compact */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="p-5 border border-gray-200 rounded-lg hover:shadow-md transition-shadow">
+              <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center mb-3">
+                <Shield className="w-5 h-5 text-green-600" />
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">Verified Properties</h3>
-              <p className="text-gray-600 leading-relaxed">
-                Every property is verified and reviewed. We ensure quality accommodations that meet our high standards.
+              <h3 className="text-lg font-bold text-gray-900 mb-2">Secure Payments</h3>
+              <p className="text-sm text-gray-600">
+                Industry-standard encryption protects all transactions.
               </p>
             </div>
 
-            <div className="p-8 border border-gray-200 rounded-xl hover:shadow-lg transition-shadow">
-              <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
-                <Clock className="w-6 h-6 text-purple-600" />
+            <div className="p-5 border border-gray-200 rounded-lg hover:shadow-md transition-shadow">
+              <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center mb-3">
+                <CheckCircle className="w-5 h-5 text-blue-600" />
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">24/7 Support</h3>
-              <p className="text-gray-600 leading-relaxed">
-                Our customer support team is available around the clock to help you with any questions or concerns.
+              <h3 className="text-lg font-bold text-gray-900 mb-2">Verified Properties</h3>
+              <p className="text-sm text-gray-600">
+                All properties are verified and quality-checked.
               </p>
             </div>
 
-            <div className="p-8 border border-gray-200 rounded-xl hover:shadow-lg transition-shadow">
-              <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mb-4">
-                <Lock className="w-6 h-6 text-orange-600" />
+            <div className="p-5 border border-gray-200 rounded-lg hover:shadow-md transition-shadow">
+              <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center mb-3">
+                <Clock className="w-5 h-5 text-purple-600" />
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">Easy Cancellation</h3>
-              <p className="text-gray-600 leading-relaxed">
-                Flexible cancellation policies. Cancel your booking up to 24 hours before check-in for a full refund.
+              <h3 className="text-lg font-bold text-gray-900 mb-2">24/7 Support</h3>
+              <p className="text-sm text-gray-600">
+                Round-the-clock customer support available.
               </p>
             </div>
 
-            <div className="p-8 border border-gray-200 rounded-xl hover:shadow-lg transition-shadow">
-              <div className="w-12 h-12 bg-[var(--logo-primary)]/10 rounded-lg flex items-center justify-center mb-4">
-                <Award className="w-6 h-6 text-[var(--logo-primary)]" />
+            <div className="p-5 border border-gray-200 rounded-lg hover:shadow-md transition-shadow">
+              <div className="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center mb-3">
+                <Zap className="w-5 h-5 text-orange-600" />
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">Best Prices</h3>
-              <p className="text-gray-600 leading-relaxed">
-                Compare prices across multiple properties. We guarantee competitive rates with no hidden fees.
-              </p>
-            </div>
-
-            <div className="p-8 border border-gray-200 rounded-xl hover:shadow-lg transition-shadow">
-              <div className="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center mb-4">
-                <Zap className="w-6 h-6 text-indigo-600" />
-              </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">Instant Booking</h3>
-              <p className="text-gray-600 leading-relaxed">
-                Book instantly without waiting for host approval. Get confirmed reservations in seconds.
+              <h3 className="text-lg font-bold text-gray-900 mb-2">Instant Booking</h3>
+              <p className="text-sm text-gray-600">
+                Book instantly with confirmed reservations.
               </p>
             </div>
           </div>
@@ -2412,13 +2391,13 @@ const MyHostApp = () => {
       },
       'exchange': {
         title: '🌍 Host Exchange',
-        description: 'Reciprocal hosting opportunities for homeowners',
+        description: 'The same families can host people traveling - reciprocal hosting between families',
         icon: Globe,
         gradient: 'from-purple-500 via-pink-600 to-rose-700'
       },
       'student': {
         title: '⭐ Student Longstay',
-        description: 'Budget-friendly monthly & semester stays for students - linked to nearby schools and colleges',
+        description: 'Extensions linking students to schools and property owners around schools with students',
         icon: Star,
         gradient: 'from-orange-500 via-amber-600 to-yellow-700'
       },
@@ -2705,29 +2684,29 @@ const MyHostApp = () => {
                   {/* Student Longstay - School Information */}
                   {selectedProperty.category === 'student' && (
                     <div className="bg-blue-50 border border-blue-200 rounded-xl p-6 mb-4">
-                      <h3 className="text-lg font-semibold mb-4 text-blue-900">Nearby Schools & Colleges</h3>
-                      <p className="text-gray-700 mb-4">This property is linked to nearby educational institutions. Students booking here will receive information about:</p>
+                      <h3 className="text-lg font-semibold mb-4 text-blue-900">Student-School Connection</h3>
+                      <p className="text-gray-700 mb-4">This extension links students to schools and connects property owners around schools with students. You'll receive:</p>
                       <div className="space-y-2">
                         <div className="flex items-center space-x-2">
                           <div className="w-2 h-2 bg-blue-600 rounded-full"></div>
-                          <span className="text-gray-700">Nearby colleges and universities</span>
+                          <span className="text-gray-700">Direct connection to nearby schools and colleges</span>
                         </div>
                         <div className="flex items-center space-x-2">
                           <div className="w-2 h-2 bg-blue-600 rounded-full"></div>
-                          <span className="text-gray-700">Transportation options to schools</span>
+                          <span className="text-gray-700">Property owners around schools with student accommodation</span>
                         </div>
                         <div className="flex items-center space-x-2">
                           <div className="w-2 h-2 bg-blue-600 rounded-full"></div>
-                          <span className="text-gray-700">Student-friendly amenities</span>
+                          <span className="text-gray-700">Transportation options and student-friendly amenities</span>
                         </div>
                       </div>
                       <button 
                         onClick={() => {
-                          alert('After booking, you will receive detailed information about nearby schools, colleges, and transportation options. This helps students find accommodation close to their educational institutions.');
+                          alert('Student Longstay extension connects you with property owners around schools. Find accommodation near your educational institution and get linked to nearby schools.');
                         }}
                         className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-semibold"
                       >
-                        Learn More About Nearby Schools
+                        Connect to Schools & Property Owners
                       </button>
                     </div>
                   )}
