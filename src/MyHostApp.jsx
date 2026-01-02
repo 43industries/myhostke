@@ -79,6 +79,7 @@ const MyHostApp = () => {
       amenities: ["WiFi", "Pool", "Garden", "Parking", "Kitchen", "Washing Machine"],
       host: "Jane Kimani",
       caretaker: "John Ochieng",
+      caretakerPhoto: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop",
       rating: 4.8,
       reviews: 12,
       image: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&h=600&fit=crop",
@@ -98,6 +99,7 @@ const MyHostApp = () => {
       amenities: ["WiFi", "Fireplace", "Garden", "Kitchen", "Parking"],
       host: "Peter Mwangi",
       caretaker: "Mary Wanjiku",
+      caretakerPhoto: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&h=200&fit=crop",
       rating: 4.9,
       reviews: 8,
       image: "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=800&h=600&fit=crop",
@@ -116,6 +118,7 @@ const MyHostApp = () => {
       amenities: ["WiFi", "Garden", "Kitchen", "Parking"],
       host: "Sarah Njeri",
       caretaker: "David Kamau",
+      caretakerPhoto: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&h=200&fit=crop",
       rating: 4.7,
       reviews: 15,
       image: "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&h=600&fit=crop",
@@ -172,6 +175,7 @@ const MyHostApp = () => {
 
   const [isProcessingPayment, setIsProcessingPayment] = useState(false);
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('pesapal'); // 'pesapal', 'mpesa', 'card', 'bank'
+  const [paidBookings, setPaidBookings] = useState(new Set()); // Track which property bookings have been paid
 
 
   const [newProperty, setNewProperty] = useState({
@@ -913,7 +917,7 @@ const MyHostApp = () => {
         <div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
-            backgroundImage: 'url(https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1920&h=1080&fit=crop&q=80)',
+            backgroundImage: 'url(https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=1920&h=1080&fit=crop&q=80)',
           }}
         >
           {/* Dark overlay for text readability */}
@@ -1213,11 +1217,11 @@ const MyHostApp = () => {
           >
             <div className="relative w-full h-64 overflow-hidden">
               <img 
-                src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=800&q=80" 
+                src="https://images.unsplash.com/photo-1509062522246-3755977927d7?w=800&q=80" 
                 alt="Student accommodation"
                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                 onError={(e) => {
-                  e.target.src = 'https://images.unsplash.com/photo-1497486751825-1233686d5d80?w=800&q=80';
+                  e.target.src = 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=800&q=80';
                 }}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent"></div>
@@ -1242,11 +1246,11 @@ const MyHostApp = () => {
           >
             <div className="relative w-full h-64 overflow-hidden">
               <img 
-                src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&q=80" 
+                src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=800&q=80" 
                 alt="Commercial storage units"
                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                 onError={(e) => {
-                  e.target.src = 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&q=80';
+                  e.target.src = 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&q=80';
                 }}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent"></div>
@@ -1256,7 +1260,7 @@ const MyHostApp = () => {
                 </div>
                 <div>
                   <h3 className="text-2xl font-bold mb-1 drop-shadow-lg">MyStore Units</h3>
-                  <p className="text-sm text-white/90 font-medium">Commercial & storage</p>
+                  <p className="text-sm text-white/90 font-medium">Garage & warehouse rental</p>
                 </div>
               </div>
             </div>
@@ -1455,7 +1459,16 @@ const MyHostApp = () => {
               <Users className="w-8 h-8 text-white" />
             </div>
             <h3 className="text-2xl font-extrabold mb-3 text-gray-900">Student Longstay</h3>
-            <p className="text-gray-600 leading-relaxed mb-4">Long-term budget accommodation for students who require countryside stays closer to colleges. Monthly or semester-based options available.</p>
+            <p className="text-gray-600 leading-relaxed mb-4">Long-term budget accommodation for students who require countryside stays closer to colleges. Monthly or semester-based options available. Properties are linked to nearby schools and colleges.</p>
+            <button 
+              onClick={() => {
+                // In production, this would show a list of nearby schools/colleges
+                alert('Student Longstay properties are linked to nearby schools and colleges. When you book, you\'ll receive information about nearby educational institutions.');
+              }}
+              className="mt-4 px-4 py-2 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition-colors text-sm font-semibold"
+            >
+              View Nearby Schools
+            </button>
             <div className="flex items-center space-x-2">
               <div className="w-3 h-3 bg-gradient-to-br from-orange-500 to-rose-500 rounded-full pulse-animation"></div>
               <div className="w-3 h-3 bg-gradient-to-br from-rose-500 to-pink-600 rounded-full pulse-animation" style={{ animationDelay: '0.2s' }}></div>
@@ -1699,25 +1712,192 @@ const MyHostApp = () => {
             </div>
           </div>
 
-          {/* Call to Action */}
-          <div className="mt-16 text-center bg-orange-500 py-16 px-4">
-            <div className="max-w-4xl mx-auto">
-              <p className="text-lg text-white mb-4 font-semibold">
-                Ready to get started?
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <button 
-                  onClick={() => setCurrentPage('host')}
-                  className="px-8 py-3 bg-white text-orange-600 rounded-lg font-semibold hover:bg-gray-100 transition-colors"
-                >
-                  List Your Property
-                </button>
-                <button 
-                  onClick={() => setCurrentPage('properties')}
-                  className="px-8 py-3 bg-orange-600 border-2 border-white text-white rounded-lg font-semibold hover:bg-orange-700 transition-colors"
-                >
-                  Browse Properties
-                </button>
+          {/* Footer */}
+          <div className="mt-16 bg-orange-500 py-12 px-4">
+            <div className="max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+                {/* Quick Links */}
+                <div>
+                  <h3 className="text-white font-bold text-lg mb-4">Quick Links</h3>
+                  <ul className="space-y-2">
+                    <li>
+                      <button 
+                        onClick={() => setCurrentPage('home')}
+                        className="text-white/90 hover:text-white transition-colors text-sm"
+                      >
+                        Home
+                      </button>
+                    </li>
+                    <li>
+                      <button 
+                        onClick={() => setCurrentPage('properties')}
+                        className="text-white/90 hover:text-white transition-colors text-sm"
+                      >
+                        Browse Properties
+                      </button>
+                    </li>
+                    <li>
+                      <button 
+                        onClick={() => handleCategoryClick('student')}
+                        className="text-white/90 hover:text-white transition-colors text-sm"
+                      >
+                        Student Longstay
+                      </button>
+                    </li>
+                    <li>
+                      <button 
+                        onClick={() => handleCategoryClick('store')}
+                        className="text-white/90 hover:text-white transition-colors text-sm"
+                      >
+                        MyStore Units
+                      </button>
+                    </li>
+                    <li>
+                      <button 
+                        onClick={() => setCurrentPage('host')}
+                        className="text-white/90 hover:text-white transition-colors text-sm"
+                      >
+                        Become a Host
+                      </button>
+                    </li>
+                  </ul>
+                </div>
+
+                {/* Support */}
+                <div>
+                  <h3 className="text-white font-bold text-lg mb-4">Support</h3>
+                  <ul className="space-y-2">
+                    <li>
+                      <button 
+                        onClick={() => alert('Help Center - In production, this would open a help center page.')}
+                        className="text-white/90 hover:text-white transition-colors text-sm"
+                      >
+                        Help Center
+                      </button>
+                    </li>
+                    <li>
+                      <button 
+                        onClick={() => alert('Contact Us - Email: support@myhost.com\nPhone: +254 XXX XXX XXX')}
+                        className="text-white/90 hover:text-white transition-colors text-sm"
+                      >
+                        Contact Us
+                      </button>
+                    </li>
+                    <li>
+                      <button 
+                        onClick={() => alert('FAQs - Frequently asked questions about bookings, payments, and hosting.')}
+                        className="text-white/90 hover:text-white transition-colors text-sm"
+                      >
+                        FAQs
+                      </button>
+                    </li>
+                    <li>
+                      <button 
+                        onClick={() => alert('Safety Tips - Important safety information for guests and hosts.')}
+                        className="text-white/90 hover:text-white transition-colors text-sm"
+                      >
+                        Safety Tips
+                      </button>
+                    </li>
+                  </ul>
+                </div>
+
+                {/* Cookie Policy */}
+                <div>
+                  <h3 className="text-white font-bold text-lg mb-4">Legal</h3>
+                  <ul className="space-y-2">
+                    <li>
+                      <button 
+                        onClick={() => alert('Cookie Policy - We use cookies to enhance your experience. By using our site, you agree to our use of cookies.')}
+                        className="text-white/90 hover:text-white transition-colors text-sm"
+                      >
+                        Cookie Policy
+                      </button>
+                    </li>
+                    <li>
+                      <button 
+                        onClick={() => alert('Privacy Policy - How we collect, use, and protect your personal information.')}
+                        className="text-white/90 hover:text-white transition-colors text-sm"
+                      >
+                        Privacy Policy
+                      </button>
+                    </li>
+                    <li>
+                      <button 
+                        onClick={() => alert('Terms of Service - Terms and conditions for using MyHost platform.')}
+                        className="text-white/90 hover:text-white transition-colors text-sm"
+                      >
+                        Terms of Service
+                      </button>
+                    </li>
+                    <li>
+                      <button 
+                        onClick={() => alert('Refund Policy - Information about refunds and cancellations.')}
+                        className="text-white/90 hover:text-white transition-colors text-sm"
+                      >
+                        Refund Policy
+                      </button>
+                    </li>
+                  </ul>
+                </div>
+
+                {/* Accessibility */}
+                <div>
+                  <h3 className="text-white font-bold text-lg mb-4">Accessibility</h3>
+                  <ul className="space-y-2">
+                    <li>
+                      <button 
+                        onClick={() => alert('Accessibility Statement - MyHost is committed to making our platform accessible to all users.')}
+                        className="text-white/90 hover:text-white transition-colors text-sm"
+                      >
+                        Accessibility Statement
+                      </button>
+                    </li>
+                    <li>
+                      <button 
+                        onClick={() => {
+                          // Increase font size or other accessibility features
+                          alert('Accessibility Features - Options to adjust text size, contrast, and other accessibility settings.');
+                        }}
+                        className="text-white/90 hover:text-white transition-colors text-sm"
+                      >
+                        Accessibility Features
+                      </button>
+                    </li>
+                    <li>
+                      <button 
+                        onClick={() => alert('Report an Issue - Report accessibility issues or request accommodations.')}
+                        className="text-white/90 hover:text-white transition-colors text-sm"
+                      >
+                        Report an Issue
+                      </button>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              {/* Footer Bottom */}
+              <div className="border-t border-white/20 pt-8 mt-8">
+                <div className="flex flex-col md:flex-row justify-between items-center">
+                  <p className="text-white/80 text-sm mb-4 md:mb-0">
+                    © {new Date().getFullYear()} MyHost. All rights reserved.
+                  </p>
+                  <div className="flex items-center space-x-4">
+                    <button 
+                      onClick={() => setCurrentPage('home')}
+                      className="text-white/80 hover:text-white transition-colors"
+                    >
+                      <img 
+                        src="/myhost-logo.png" 
+                        alt="MyHost Logo" 
+                        className="h-8 w-auto"
+                        onError={(e) => {
+                          e.target.style.display = 'none';
+                        }}
+                      />
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -2284,13 +2464,13 @@ const MyHostApp = () => {
       },
       'student': {
         title: '⭐ Student Longstay',
-        description: 'Budget-friendly monthly & semester stays for students',
+        description: 'Budget-friendly monthly & semester stays for students - linked to nearby schools and colleges',
         icon: Star,
         gradient: 'from-orange-500 via-amber-600 to-yellow-700'
       },
       'store': {
         title: '✨ MyStore Units',
-        description: 'Commercial & storage units for business needs',
+        description: 'Rent commercial spaces like garages and warehouses for your business needs',
         icon: Sparkles,
         gradient: 'from-cyan-500 via-blue-600 to-indigo-700'
       }
@@ -2568,6 +2748,36 @@ const MyHostApp = () => {
                     <p className="text-gray-700 leading-relaxed">{selectedProperty.description}</p>
                   </div>
 
+                  {/* Student Longstay - School Information */}
+                  {selectedProperty.category === 'student' && (
+                    <div className="bg-blue-50 border border-blue-200 rounded-xl p-6 mb-4">
+                      <h3 className="text-lg font-semibold mb-4 text-blue-900">Nearby Schools & Colleges</h3>
+                      <p className="text-gray-700 mb-4">This property is linked to nearby educational institutions. Students booking here will receive information about:</p>
+                      <div className="space-y-2">
+                        <div className="flex items-center space-x-2">
+                          <div className="w-2 h-2 bg-blue-600 rounded-full"></div>
+                          <span className="text-gray-700">Nearby colleges and universities</span>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <div className="w-2 h-2 bg-blue-600 rounded-full"></div>
+                          <span className="text-gray-700">Transportation options to schools</span>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <div className="w-2 h-2 bg-blue-600 rounded-full"></div>
+                          <span className="text-gray-700">Student-friendly amenities</span>
+                        </div>
+                      </div>
+                      <button 
+                        onClick={() => {
+                          alert('After booking, you will receive detailed information about nearby schools, colleges, and transportation options. This helps students find accommodation close to their educational institutions.');
+                        }}
+                        className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-semibold"
+                      >
+                        Learn More About Nearby Schools
+                      </button>
+                    </div>
+                  )}
+
                   {/* MyStore Specific Information */}
                   {selectedProperty.category === 'store' && (
                     <div className="bg-orange-50 border border-orange-200 rounded-xl p-6 mb-4">
@@ -2647,11 +2857,47 @@ const MyHostApp = () => {
                     <p className="font-medium">{selectedProperty.host}</p>
                     <p className="text-sm text-gray-600">Host · {selectedProperty.reviews} reviews</p>
                   </div>
-                  <button className="w-full bg-orange-600 text-white border-2 border-orange-700 rounded-xl px-6 py-3 font-bold hover:bg-orange-700 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 active:scale-95 flex items-center justify-center space-x-2 group">
+                  <button 
+                    onClick={() => {
+                      const bookingKey = `${selectedProperty.id}-${bookingDetails.checkIn}-${bookingDetails.checkOut}`;
+                      if (!paidBookings.has(bookingKey)) {
+                        alert('Please complete payment first before contacting the host. Payment is required to access host contact information.');
+                        return;
+                      }
+                      // Contact host functionality - in production, this would open a messaging interface
+                      alert(`Contacting ${selectedProperty.host}...\n\nIn production, this would open a messaging interface.`);
+                    }}
+                    className={`w-full border-2 border-orange-700 rounded-xl px-6 py-3 font-bold transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 active:scale-95 flex items-center justify-center space-x-2 group ${
+                      paidBookings.has(`${selectedProperty.id}-${bookingDetails.checkIn}-${bookingDetails.checkOut}`)
+                        ? 'bg-orange-600 text-white hover:bg-orange-700'
+                        : 'bg-gray-300 text-gray-600 cursor-not-allowed hover:bg-gray-400'
+                    }`}
+                  >
                     <User className="w-4 h-4 group-hover:scale-110 transition-transform" />
-                    <span>Contact host</span>
+                    <span>{paidBookings.has(`${selectedProperty.id}-${bookingDetails.checkIn}-${bookingDetails.checkOut}`) ? 'Contact host' : 'Complete payment to contact host'}</span>
                   </button>
                 </div>
+
+                {/* Caretaker Info */}
+                {selectedProperty.caretaker && (
+                  <div className="border border-gray-200 rounded-xl p-6 mt-6">
+                    <h3 className="text-lg font-semibold mb-4">Meet your caretaker</h3>
+                    <div className="flex items-center space-x-4 mb-4">
+                      {selectedProperty.caretakerPhoto && (
+                        <img 
+                          src={selectedProperty.caretakerPhoto} 
+                          alt={selectedProperty.caretaker}
+                          className="w-16 h-16 rounded-full object-cover border-2 border-gray-300"
+                        />
+                      )}
+                      <div>
+                        <p className="font-medium">{selectedProperty.caretaker}</p>
+                        <p className="text-sm text-gray-600">Property Caretaker</p>
+                      </div>
+                    </div>
+                    <p className="text-sm text-gray-600">Your caretaker will assist you during your stay and ensure everything is in order.</p>
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -3517,9 +3763,14 @@ const MyHostApp = () => {
                     const data = await response.json();
                     
                     if (data.success) {
+                      // Mark booking as paid
+                      const bookingKey = `${selectedProperty.id}-${bookingDetails.checkIn}-${bookingDetails.checkOut}`;
+                      setPaidBookings(prev => new Set([...prev, bookingKey]));
+                      
                       // Handle different payment method responses
                       if (selectedPaymentMethod === 'pesapal' && data.redirectUrl) {
                         // Pesapal redirects to external payment page
+                        // Payment will be confirmed via webhook, but mark as paid for now
                         window.location.href = data.redirectUrl;
                       } else if (selectedPaymentMethod === 'mpesa') {
                         // M-Pesa shows STK push message
