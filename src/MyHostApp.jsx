@@ -11,6 +11,9 @@ const MyHostApp = () => {
   const [amenitiesFilter, setAmenitiesFilter] = useState([]);
   const [roomsFilter, setRoomsFilter] = useState(null);
   const [typeFilter, setTypeFilter] = useState(null);
+  const [ratingFilter, setRatingFilter] = useState(null);
+  const [locationFilter, setLocationFilter] = useState('');
+  const [categoryFilter, setCategoryFilter] = useState(null);
   const [sortBy, setSortBy] = useState('popular');
   const [favorites, setFavorites] = useState(new Set());
   const [activeCategory, setActiveCategory] = useState(null);
@@ -20,6 +23,9 @@ const MyHostApp = () => {
   const [showAmenitiesFilter, setShowAmenitiesFilter] = useState(false);
   const [showRoomsFilter, setShowRoomsFilter] = useState(false);
   const [showTypeFilter, setShowTypeFilter] = useState(false);
+  const [showRatingFilter, setShowRatingFilter] = useState(false);
+  const [showLocationFilter, setShowLocationFilter] = useState(false);
+  const [showCategoryFilter, setShowCategoryFilter] = useState(false);
   const [showSortMenu, setShowSortMenu] = useState(false);
   const [showFiltersMenu, setShowFiltersMenu] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
@@ -313,12 +319,57 @@ const MyHostApp = () => {
     // Type filter
     if (typeFilter) {
       const typeLower = typeFilter.toLowerCase();
-      if (!p.title.toLowerCase().includes(typeLower) && !p.description?.toLowerCase().includes(typeLower)) {
+      // Check if property title or description contains the type
+      const titleMatch = p.title.toLowerCase().includes(typeLower);
+      const descMatch = p.description?.toLowerCase().includes(typeLower);
+      // Also check for common variations
+      const variations = {
+        'ranch': ['ranch', 'ranching'],
+        'farm': ['farm', 'farming', 'farmhouse'],
+        'homestead': ['homestead', 'homesteading'],
+        'cottage': ['cottage'],
+        'villa': ['villa'],
+        'country house': ['country house', 'countryside house'],
+        'farmhouse': ['farmhouse', 'farm house'],
+        'bungalow': ['bungalow'],
+        'estate': ['estate']
+      };
+      const typeVariations = variations[typeLower] || [typeLower];
+      const hasVariation = typeVariations.some(v => 
+        p.title.toLowerCase().includes(v) || p.description?.toLowerCase().includes(v)
+      );
+      
+      if (!titleMatch && !descMatch && !hasVariation) {
         return false;
       }
     }
     
+    // Rating filter
+    if (ratingFilter && p.rating < ratingFilter) {
+      return false;
+    }
+    
+    // Location filter
+    if (locationFilter && !p.location.toLowerCase().includes(locationFilter.toLowerCase())) {
+      return false;
+    }
+    
     // Category filter
+    if (categoryFilter) {
+      if (categoryFilter === 'group' && (!p.rooms || p.rooms < 3)) {
+        return false;
+      } else if (categoryFilter === 'student' && p.dailyRate > 3500) {
+        return false;
+      } else if (categoryFilter === 'store' && p.category !== 'store') {
+        return false;
+      } else if (categoryFilter === 'exchange' && p.category !== 'exchange') {
+        return false;
+      } else if (categoryFilter === 'properties' && p.category !== 'properties') {
+        return false;
+      }
+    }
+    
+    // Category filter (activeCategory)
     if (activeCategory === 'group') {
       return matchesSearch && p.rooms >= 3; // Group hosting = 3+ rooms
     } else if (activeCategory === 'student') {
@@ -512,6 +563,9 @@ const MyHostApp = () => {
                   setShowAmenitiesFilter(false);
                   setShowRoomsFilter(false);
                   setShowTypeFilter(false);
+                  setShowRatingFilter(false);
+                  setShowLocationFilter(false);
+                  setShowCategoryFilter(false);
                   setShowSortMenu(false);
                 }}
                 className={`flex items-center space-x-1.5 px-4 py-2 bg-orange-600 text-white border-2 border-orange-700 rounded-full text-sm font-bold transition-all duration-300 whitespace-nowrap shadow-lg hover:shadow-xl hover:bg-orange-700 ${showPriceFilter ? 'scale-105' : 'hover:scale-105'}`}
@@ -585,6 +639,9 @@ const MyHostApp = () => {
                   setShowPriceFilter(false);
                   setShowRoomsFilter(false);
                   setShowTypeFilter(false);
+                  setShowRatingFilter(false);
+                  setShowLocationFilter(false);
+                  setShowCategoryFilter(false);
                   setShowSortMenu(false);
                 }}
                 className={`flex items-center space-x-1.5 px-4 py-2 bg-orange-600 text-white border-2 border-orange-700 rounded-full text-sm font-bold transition-all duration-300 whitespace-nowrap shadow-lg hover:shadow-xl hover:bg-orange-700 ${showAmenitiesFilter ? 'scale-105' : 'hover:scale-105'}`}
@@ -674,6 +731,9 @@ const MyHostApp = () => {
                   setShowPriceFilter(false);
                   setShowAmenitiesFilter(false);
                   setShowTypeFilter(false);
+                  setShowRatingFilter(false);
+                  setShowLocationFilter(false);
+                  setShowCategoryFilter(false);
                   setShowSortMenu(false);
                 }}
                 className={`flex items-center space-x-1.5 px-4 py-2 bg-orange-600 text-white border-2 border-orange-700 rounded-full text-sm font-bold transition-all duration-300 whitespace-nowrap shadow-lg hover:shadow-xl hover:bg-orange-700 ${showRoomsFilter ? 'scale-105' : 'hover:scale-105'}`}
@@ -746,6 +806,9 @@ const MyHostApp = () => {
                   setShowPriceFilter(false);
                   setShowAmenitiesFilter(false);
                   setShowRoomsFilter(false);
+                  setShowRatingFilter(false);
+                  setShowLocationFilter(false);
+                  setShowCategoryFilter(false);
                   setShowSortMenu(false);
                 }}
                 className={`flex items-center space-x-1.5 px-4 py-2 bg-orange-600 text-white border-2 border-orange-700 rounded-full text-sm font-bold transition-all duration-300 whitespace-nowrap shadow-lg hover:shadow-xl hover:bg-orange-700 ${showTypeFilter ? 'scale-105' : 'hover:scale-105'}`}
@@ -770,17 +833,17 @@ const MyHostApp = () => {
                         <X className="w-5 h-5 text-gray-600" />
                       </button>
                     </div>
-                    <div className="space-y-2">
-                      {['All', 'Villa', 'Cottage', 'House', 'Apartment'].map(type => (
+                    <div className="grid grid-cols-2 gap-2">
+                      {['All', 'Ranch', 'Farm', 'Homestead', 'Cottage', 'Villa', 'Country House', 'Farmhouse', 'Bungalow', 'Estate'].map(type => (
                         <button
                           key={type}
                           onClick={() => {
                             setTypeFilter(type === 'All' ? null : type);
                           }}
-                          className={`w-full text-left px-4 py-3 rounded-lg transition-all duration-200 font-semibold ${
+                          className={`text-left px-4 py-3 rounded-lg transition-all duration-200 font-semibold ${
                             typeFilter === type || (type === 'All' && !typeFilter)
                               ? 'bg-gradient-to-r from-[var(--logo-primary)] to-[var(--logo-secondary)] text-white shadow-md'
-                              : 'text-gray-700 hover:bg-gradient-to-r hover:from-[var(--logo-primary)]/10 hover:to-[var(--logo-secondary)]/10 hover:text-[var(--logo-primary)]'
+                              : 'text-gray-700 hover:bg-gradient-to-r hover:from-[var(--logo-primary)]/10 hover:to-[var(--logo-secondary)]/10 hover:text-[var(--logo-primary)] border-2 border-gray-200'
                           }`}
                         >
                           {type}
@@ -810,6 +873,263 @@ const MyHostApp = () => {
               )}
             </div>
 
+            {/* Rating Filter */}
+            <div className="relative">
+              <button 
+                onClick={() => {
+                  setShowRatingFilter(!showRatingFilter);
+                  setShowPriceFilter(false);
+                  setShowAmenitiesFilter(false);
+                  setShowRoomsFilter(false);
+                  setShowTypeFilter(false);
+                  setShowLocationFilter(false);
+                  setShowCategoryFilter(false);
+                  setShowSortMenu(false);
+                }}
+                className={`flex items-center space-x-1.5 px-4 py-2 bg-orange-600 text-white border-2 border-orange-700 rounded-full text-sm font-bold transition-all duration-300 whitespace-nowrap shadow-lg hover:shadow-xl hover:bg-orange-700 ${showRatingFilter ? 'scale-105' : 'hover:scale-105'}`}
+              >
+                <Star className="w-4 h-4" />
+                <span>Rating</span>
+                {ratingFilter && (
+                  <span className="bg-white/20 text-white px-1.5 py-0.5 rounded-full text-xs font-bold">
+                    {ratingFilter}+
+                  </span>
+                )}
+                <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${showRatingFilter ? 'rotate-180' : ''}`} />
+              </button>
+              {showRatingFilter && (
+                <>
+                  <div className="fixed inset-0 z-40 bg-black/50 backdrop-blur-md animate-in fade-in" onClick={() => setShowRatingFilter(false)}></div>
+                  <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white border-4 border-[var(--logo-primary)] rounded-3xl shadow-[0_20px_60px_rgba(0,0,0,0.3)] z-50 p-8 min-w-[500px] max-w-[600px] animate-in zoom-in-95 duration-200" onClick={(e) => e.stopPropagation()}>
+                    <div className="flex items-center justify-between mb-4">
+                      <div>
+                        <h3 className="text-2xl font-bold text-gray-900">Minimum Rating</h3>
+                        <p className="text-base text-gray-700 mt-1 font-medium">Select minimum rating</p>
+                      </div>
+                      <button
+                        onClick={() => setShowRatingFilter(false)}
+                        className="w-10 h-10 rounded-full hover:bg-gray-100 flex items-center justify-center transition-colors border-2 border-gray-200 hover:border-[var(--logo-primary)]"
+                      >
+                        <X className="w-5 h-5 text-gray-600" />
+                      </button>
+                    </div>
+                    <div className="grid grid-cols-5 gap-3">
+                      {[4.0, 4.2, 4.5, 4.7, 4.9].map(rating => (
+                        <button
+                          key={rating}
+                          onClick={() => {
+                            setRatingFilter(ratingFilter === rating ? null : rating);
+                          }}
+                          className={`px-4 py-3 rounded-lg border-2 transition-all duration-200 font-bold text-base ${
+                            ratingFilter === rating 
+                              ? 'border-[var(--logo-primary)] bg-gradient-to-r from-[var(--logo-primary)] to-[var(--logo-secondary)] text-white shadow-md scale-105' 
+                              : 'border-gray-300 text-gray-700 hover:border-[var(--logo-primary)]/60 hover:bg-[var(--logo-primary)]/5 hover:scale-105 active:scale-95'
+                          }`}
+                        >
+                          {rating}+
+                        </button>
+                      ))}
+                    </div>
+                    <div className="flex space-x-3 mt-4">
+                      <button
+                        onClick={() => {
+                          setRatingFilter(null);
+                          setShowRatingFilter(false);
+                        }}
+                        className="flex-1 px-4 py-2.5 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 text-sm font-semibold transition-all duration-200 flex items-center justify-center space-x-2"
+                      >
+                        <X className="w-4 h-4" />
+                        <span>Clear</span>
+                      </button>
+                      <button
+                        onClick={() => setShowRatingFilter(false)}
+                        className="flex-1 px-4 py-2.5 bg-orange-600 text-white rounded-lg hover:bg-orange-700 text-sm font-bold transition-all duration-200 shadow-lg hover:shadow-xl border-2 border-orange-700"
+                      >
+                        Apply
+                      </button>
+                    </div>
+                  </div>
+                </>
+              )}
+            </div>
+
+            {/* Location Filter */}
+            <div className="relative">
+              <button 
+                onClick={() => {
+                  setShowLocationFilter(!showLocationFilter);
+                  setShowPriceFilter(false);
+                  setShowAmenitiesFilter(false);
+                  setShowRoomsFilter(false);
+                  setShowTypeFilter(false);
+                  setShowRatingFilter(false);
+                  setShowCategoryFilter(false);
+                  setShowSortMenu(false);
+                }}
+                className={`flex items-center space-x-1.5 px-4 py-2 bg-orange-600 text-white border-2 border-orange-700 rounded-full text-sm font-bold transition-all duration-300 whitespace-nowrap shadow-lg hover:shadow-xl hover:bg-orange-700 ${showLocationFilter ? 'scale-105' : 'hover:scale-105'}`}
+              >
+                <MapPin className="w-4 h-4" />
+                <span>Location</span>
+                {locationFilter && (
+                  <span className="bg-white/20 text-white px-1.5 py-0.5 rounded-full text-xs font-bold">
+                    ✓
+                  </span>
+                )}
+                <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${showLocationFilter ? 'rotate-180' : ''}`} />
+              </button>
+              {showLocationFilter && (
+                <>
+                  <div className="fixed inset-0 z-40 bg-black/50 backdrop-blur-md animate-in fade-in" onClick={() => setShowLocationFilter(false)}></div>
+                  <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white border-4 border-[var(--logo-primary)] rounded-3xl shadow-[0_20px_60px_rgba(0,0,0,0.3)] z-50 p-8 min-w-[500px] max-w-[600px] animate-in zoom-in-95 duration-200" onClick={(e) => e.stopPropagation()}>
+                    <div className="flex items-center justify-between mb-4">
+                      <div>
+                        <h3 className="text-2xl font-bold text-gray-900">Filter by Location</h3>
+                        <p className="text-base text-gray-700 mt-1 font-medium">Enter location name</p>
+                      </div>
+                      <button
+                        onClick={() => setShowLocationFilter(false)}
+                        className="w-10 h-10 rounded-full hover:bg-gray-100 flex items-center justify-center transition-colors border-2 border-gray-200 hover:border-[var(--logo-primary)]"
+                      >
+                        <X className="w-5 h-5 text-gray-600" />
+                      </button>
+                    </div>
+                    <div className="space-y-4">
+                      <input
+                        type="text"
+                        placeholder="e.g. Nairobi, Kisumu, Mombasa"
+                        value={locationFilter}
+                        onChange={(e) => setLocationFilter(e.target.value)}
+                        className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-[var(--logo-primary)] focus:ring-2 focus:ring-[var(--logo-primary)] outline-none"
+                      />
+                      <div className="text-sm text-gray-600">
+                        <p className="font-semibold mb-2">Popular locations:</p>
+                        <div className="flex flex-wrap gap-2">
+                          {popularDestinations.map(loc => (
+                            <button
+                              key={loc}
+                              onClick={() => setLocationFilter(loc)}
+                              className={`px-3 py-1.5 rounded-full text-sm font-medium transition-all ${
+                                locationFilter === loc
+                                  ? 'bg-[var(--logo-primary)] text-white'
+                                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                              }`}
+                            >
+                              {loc}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="flex space-x-3 mt-4">
+                      <button
+                        onClick={() => {
+                          setLocationFilter('');
+                          setShowLocationFilter(false);
+                        }}
+                        className="flex-1 px-4 py-2.5 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 text-sm font-semibold transition-all duration-200 flex items-center justify-center space-x-2"
+                      >
+                        <X className="w-4 h-4" />
+                        <span>Clear</span>
+                      </button>
+                      <button
+                        onClick={() => setShowLocationFilter(false)}
+                        className="flex-1 px-4 py-2.5 bg-orange-600 text-white rounded-lg hover:bg-orange-700 text-sm font-bold transition-all duration-200 shadow-lg hover:shadow-xl border-2 border-orange-700"
+                      >
+                        Apply
+                      </button>
+                    </div>
+                  </div>
+                </>
+              )}
+            </div>
+
+            {/* Category Filter */}
+            <div className="relative">
+              <button 
+                onClick={() => {
+                  setShowCategoryFilter(!showCategoryFilter);
+                  setShowPriceFilter(false);
+                  setShowAmenitiesFilter(false);
+                  setShowRoomsFilter(false);
+                  setShowTypeFilter(false);
+                  setShowRatingFilter(false);
+                  setShowLocationFilter(false);
+                  setShowSortMenu(false);
+                }}
+                className={`flex items-center space-x-1.5 px-4 py-2 bg-orange-600 text-white border-2 border-orange-700 rounded-full text-sm font-bold transition-all duration-300 whitespace-nowrap shadow-lg hover:shadow-xl hover:bg-orange-700 ${showCategoryFilter ? 'scale-105' : 'hover:scale-105'}`}
+              >
+                <Home className="w-4 h-4" />
+                <span>Category</span>
+                {categoryFilter && (
+                  <span className="bg-white/20 text-white px-1.5 py-0.5 rounded-full text-xs font-bold">
+                    ✓
+                  </span>
+                )}
+                <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${showCategoryFilter ? 'rotate-180' : ''}`} />
+              </button>
+              {showCategoryFilter && (
+                <>
+                  <div className="fixed inset-0 z-40 bg-black/50 backdrop-blur-md animate-in fade-in" onClick={() => setShowCategoryFilter(false)}></div>
+                  <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white border-4 border-[var(--logo-primary)] rounded-3xl shadow-[0_20px_60px_rgba(0,0,0,0.3)] z-50 p-8 min-w-[500px] max-w-[600px] animate-in zoom-in-95 duration-200" onClick={(e) => e.stopPropagation()}>
+                    <div className="flex items-center justify-between mb-4">
+                      <div>
+                        <h3 className="text-2xl font-bold text-gray-900">Property Category</h3>
+                        <p className="text-base text-gray-700 mt-1 font-medium">Select category type</p>
+                      </div>
+                      <button
+                        onClick={() => setShowCategoryFilter(false)}
+                        className="w-10 h-10 rounded-full hover:bg-gray-100 flex items-center justify-center transition-colors border-2 border-gray-200 hover:border-[var(--logo-primary)]"
+                      >
+                        <X className="w-5 h-5 text-gray-600" />
+                      </button>
+                    </div>
+                    <div className="space-y-2">
+                      {[
+                        { value: null, label: 'All Categories' },
+                        { value: 'properties', label: '🏠 Properties' },
+                        { value: 'student', label: '⭐ Student Longstay' },
+                        { value: 'store', label: '✨ MyStore Units' },
+                        { value: 'exchange', label: '🌍 Host Exchange' },
+                        { value: 'group', label: '👥 Group Hosting' }
+                      ].map(cat => (
+                        <button
+                          key={cat.value || 'all'}
+                          onClick={() => {
+                            setCategoryFilter(cat.value);
+                          }}
+                          className={`w-full text-left px-4 py-3 rounded-lg transition-all duration-200 font-semibold ${
+                            categoryFilter === cat.value || (cat.value === null && !categoryFilter)
+                              ? 'bg-gradient-to-r from-[var(--logo-primary)] to-[var(--logo-secondary)] text-white shadow-md'
+                              : 'text-gray-700 hover:bg-gradient-to-r hover:from-[var(--logo-primary)]/10 hover:to-[var(--logo-secondary)]/10 hover:text-[var(--logo-primary)]'
+                          }`}
+                        >
+                          {cat.label}
+                        </button>
+                      ))}
+                    </div>
+                    <div className="flex space-x-3 mt-4">
+                      <button
+                        onClick={() => {
+                          setCategoryFilter(null);
+                          setShowCategoryFilter(false);
+                        }}
+                        className="flex-1 px-4 py-2.5 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 text-sm font-semibold transition-all duration-200 flex items-center justify-center space-x-2"
+                      >
+                        <X className="w-4 h-4" />
+                        <span>Clear</span>
+                      </button>
+                      <button
+                        onClick={() => setShowCategoryFilter(false)}
+                        className="flex-1 px-4 py-2.5 bg-orange-600 text-white rounded-lg hover:bg-orange-700 text-sm font-bold transition-all duration-200 shadow-lg hover:shadow-xl border-2 border-orange-700"
+                      >
+                        Apply
+                      </button>
+                    </div>
+                  </div>
+                </>
+              )}
+            </div>
+
             {/* Sort Menu */}
             <div className="relative">
               <button 
@@ -819,6 +1139,9 @@ const MyHostApp = () => {
                   setShowAmenitiesFilter(false);
                   setShowRoomsFilter(false);
                   setShowTypeFilter(false);
+                  setShowRatingFilter(false);
+                  setShowLocationFilter(false);
+                  setShowCategoryFilter(false);
                 }}
                 className={`flex items-center space-x-1.5 px-4 py-2 bg-orange-600 text-white border-2 border-orange-700 rounded-full text-sm font-bold transition-all duration-300 whitespace-nowrap shadow-lg hover:shadow-xl hover:bg-orange-700 ${showSortMenu ? 'scale-105' : 'hover:scale-105'}`}
               >
@@ -890,15 +1213,18 @@ const MyHostApp = () => {
                 setShowAmenitiesFilter(false);
                 setShowRoomsFilter(false);
                 setShowTypeFilter(false);
+                setShowRatingFilter(false);
+                setShowLocationFilter(false);
+                setShowCategoryFilter(false);
                 setShowSortMenu(false);
               }}
               className={`flex items-center space-x-1.5 px-4 py-2 bg-orange-600 text-white border-2 border-orange-700 rounded-full text-sm font-bold transition-all duration-300 whitespace-nowrap ml-auto shadow-lg hover:shadow-xl hover:bg-orange-700 ${showFiltersMenu ? 'scale-105' : 'hover:scale-105'}`}
             >
               <SlidersHorizontal className="w-5 h-5" />
               <span>Filters</span>
-              {(priceFilter || amenitiesFilter || roomsFilter || typeFilter) && (
+              {(priceFilter || amenitiesFilter.length > 0 || roomsFilter || typeFilter || ratingFilter || locationFilter || categoryFilter) && (
                 <span className="ml-1 bg-[var(--logo-primary)] text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold">
-                  {[priceFilter, amenitiesFilter, roomsFilter, typeFilter].filter(Boolean).length}
+                  {[priceFilter, amenitiesFilter.length > 0, roomsFilter, typeFilter, ratingFilter, locationFilter, categoryFilter].filter(Boolean).length}
                 </span>
               )}
             </button>
@@ -989,21 +1315,24 @@ const MyHostApp = () => {
                           <X className="w-4 h-4" />
                         </button>
                       </div>
-                      <input
-                        type="date"
-                        min={new Date().toISOString().split('T')[0]}
-                        value={bookingForm.checkIn}
-                        onChange={(e) => {
-                          setBookingForm({...bookingForm, checkIn: e.target.value});
-                          if (e.target.value && bookingForm.checkOut && e.target.value >= bookingForm.checkOut) {
-                            setBookingForm({...bookingForm, checkIn: e.target.value, checkOut: ''});
-                          }
-                          setShowDatePicker(false);
-                          setSelectedDateType(null);
-                        }}
-                        className="w-full text-lg p-3 border-2 border-gray-300 rounded-lg focus:border-[var(--logo-primary)] focus:ring-2 focus:ring-[var(--logo-primary)] outline-none"
-                        autoFocus
-                      />
+                      <div className="relative">
+                        <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-[var(--logo-primary)] pointer-events-none" />
+                        <input
+                          type="date"
+                          min={new Date().toISOString().split('T')[0]}
+                          value={bookingForm.checkIn}
+                          onChange={(e) => {
+                            setBookingForm({...bookingForm, checkIn: e.target.value});
+                            if (e.target.value && bookingForm.checkOut && e.target.value >= bookingForm.checkOut) {
+                              setBookingForm({...bookingForm, checkIn: e.target.value, checkOut: ''});
+                            }
+                            setShowDatePicker(false);
+                            setSelectedDateType(null);
+                          }}
+                          className="w-full text-lg p-3 pl-12 border-2 border-gray-300 rounded-lg focus:border-[var(--logo-primary)] focus:ring-2 focus:ring-[var(--logo-primary)] outline-none cursor-pointer"
+                          autoFocus
+                        />
+                      </div>
                     </div>
                   )}
                 </div>
@@ -1053,32 +1382,35 @@ const MyHostApp = () => {
                           Check-in: {new Date(bookingForm.checkIn).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
                         </p>
                       )}
-                      <input
-                        type="date"
-                        min={bookingForm.checkIn ? (() => {
-                          const checkInDate = new Date(bookingForm.checkIn);
-                          checkInDate.setDate(checkInDate.getDate() + 1);
-                          return checkInDate.toISOString().split('T')[0];
-                        })() : new Date().toISOString().split('T')[0]}
-                        value={bookingForm.checkOut || ''}
-                        onChange={(e) => {
-                          e.stopPropagation();
-                          const selectedDate = e.target.value;
-                          if (selectedDate && bookingForm.checkIn) {
-                            const checkIn = new Date(bookingForm.checkIn);
-                            const checkOut = new Date(selectedDate);
-                            if (checkOut <= checkIn) {
-                              alert('Check-out date must be after check-in date');
-                              return;
+                      <div className="relative">
+                        <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-[var(--logo-primary)] pointer-events-none" />
+                        <input
+                          type="date"
+                          min={bookingForm.checkIn ? (() => {
+                            const checkInDate = new Date(bookingForm.checkIn);
+                            checkInDate.setDate(checkInDate.getDate() + 1);
+                            return checkInDate.toISOString().split('T')[0];
+                          })() : new Date().toISOString().split('T')[0]}
+                          value={bookingForm.checkOut || ''}
+                          onChange={(e) => {
+                            e.stopPropagation();
+                            const selectedDate = e.target.value;
+                            if (selectedDate && bookingForm.checkIn) {
+                              const checkIn = new Date(bookingForm.checkIn);
+                              const checkOut = new Date(selectedDate);
+                              if (checkOut <= checkIn) {
+                                alert('Check-out date must be after check-in date');
+                                return;
+                              }
                             }
-                          }
-                          setBookingForm({...bookingForm, checkOut: selectedDate});
-                          setShowDatePicker(false);
-                          setSelectedDateType(null);
-                        }}
-                        className="w-full text-lg p-3 border-2 border-gray-300 rounded-lg focus:border-[var(--logo-primary)] focus:ring-2 focus:ring-[var(--logo-primary)] outline-none"
-                        autoFocus
-                      />
+                            setBookingForm({...bookingForm, checkOut: selectedDate});
+                            setShowDatePicker(false);
+                            setSelectedDateType(null);
+                          }}
+                          className="w-full text-lg p-3 pl-12 border-2 border-gray-300 rounded-lg focus:border-[var(--logo-primary)] focus:ring-2 focus:ring-[var(--logo-primary)] outline-none cursor-pointer"
+                          autoFocus
+                        />
+                      </div>
                     </div>
                   )}
                 </div>
