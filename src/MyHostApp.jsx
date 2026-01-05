@@ -32,6 +32,7 @@ const MyHostApp = () => {
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [showSearchSuggestions, setShowSearchSuggestions] = useState(false);
   const [searchFocused, setSearchFocused] = useState(false);
+  const [footerModal, setFooterModal] = useState(null); // 'help', 'contact', 'faq', 'safety', 'cookie', 'privacy', 'terms', 'refund', 'accessibility', 'features', 'report'
   
   // Popular destinations and search suggestions
   const popularDestinations = [
@@ -415,7 +416,9 @@ const MyHostApp = () => {
                 }
               }}
             />
-            <span className="text-xl md:text-2xl font-bold text-[var(--logo-primary)]">MyHost</span>
+            <span className="text-xl md:text-2xl font-bold">
+              <span className="text-orange-600">My</span><span className="text-black">Host</span>
+            </span>
             <div className="hidden items-center">
               <div className="w-10 h-10 bg-gradient-to-br from-[var(--logo-primary)] via-[var(--logo-secondary)] to-[var(--logo-accent)] rounded-xl flex items-center justify-center mr-3 shadow-lg group-hover:scale-110 transition-transform duration-300" style={{boxShadow: '0 0 20px rgba(var(--logo-primary-rgb, 26, 115, 232), 0.3)'}}>
                 <Home className="w-6 h-6 text-white" />
@@ -1598,6 +1601,70 @@ const MyHostApp = () => {
             </div>
           </div>
         </div>
+        
+        {/* Service Descriptions Below Category Boxes */}
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6 mt-8">
+          <div className="text-center">
+            <h4 className="font-semibold text-gray-900 mb-2">Properties</h4>
+            <p className="text-sm text-gray-600">Browse all available countryside stays with urban ambience</p>
+          </div>
+          <div className="text-center">
+            <h4 className="font-semibold text-gray-900 mb-2">Group Hosting</h4>
+            <p className="text-sm text-gray-600">Perfect for families and groups - properties with 3+ rooms</p>
+          </div>
+          <div className="text-center">
+            <h4 className="font-semibold text-gray-900 mb-2">Host Exchange</h4>
+            <p className="text-sm text-gray-600">The same families can host people traveling - reciprocal hosting</p>
+          </div>
+          <div className="text-center">
+            <h4 className="font-semibold text-gray-900 mb-2">Student Longstay</h4>
+            <p className="text-sm text-gray-600">Extensions linking students to schools and property owners around schools</p>
+          </div>
+          <div className="text-center">
+            <h4 className="font-semibold text-gray-900 mb-2">MyStore Units</h4>
+            <p className="text-sm text-gray-600">Rent commercial spaces like garages and warehouses for your business needs</p>
+          </div>
+        </div>
+      </div>
+        
+      {/* Popular Hostings Section */}
+      <div className="max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 py-12">
+        <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 text-center">Popular Hostings</h2>
+        <p className="text-center text-gray-600 mb-8">Discover popular bookings in several destinations</p>
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4">
+          {[
+            { name: 'Kisumu', image: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=400&h=300&fit=crop' },
+            { name: 'Mombasa', image: 'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=400&h=300&fit=crop' },
+            { name: 'Kilifi', image: 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=400&h=300&fit=crop' },
+            { name: 'Kwale', image: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=400&h=300&fit=crop' },
+            { name: 'Homa Bay', image: 'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=400&h=300&fit=crop' },
+            { name: 'Port Victoria', image: 'https://images.unsplash.com/photo-1600607687644-c7171b42498b?w=400&h=300&fit=crop' },
+            { name: 'Eldoret', image: 'https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=400&h=300&fit=crop' },
+            { name: 'Laikipia', image: 'https://images.unsplash.com/photo-1499793983690-e29da59ef1c2?w=400&h=300&fit=crop' }
+          ].map((dest, idx) => (
+            <div 
+              key={idx}
+              className="relative group cursor-pointer rounded-xl overflow-hidden"
+              onClick={() => {
+                setSearchQuery(dest.name);
+                setLocationFilter(dest.name);
+                handleSearchClick();
+              }}
+            >
+              <div className="relative w-full aspect-[4/3] overflow-hidden">
+                <img 
+                  src={dest.image}
+                  alt={dest.name}
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent"></div>
+                <div className="absolute bottom-0 left-0 right-0 p-3 text-white">
+                  <h4 className="font-bold text-sm">{dest.name}</h4>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
         
       {/* Search Results Summary - Premium */}
@@ -1605,7 +1672,7 @@ const MyHostApp = () => {
         <div className="flex items-center justify-between flex-wrap gap-6 bg-gradient-to-br from-[var(--logo-primary)]/10 via-[var(--logo-secondary)]/10 to-[var(--logo-accent)]/10 rounded-2xl p-6 backdrop-blur-sm">
           <div>
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2 tracking-tight">
-              Countryside Accommodations in Kenya
+              Popular
             </h2>
             <p className="text-lg text-gray-600 font-light">
               {filteredProperties.length.toLocaleString()}+ budget-friendly countryside stays with urban ambience
@@ -1917,7 +1984,7 @@ const MyHostApp = () => {
         <div className="max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
           <div className="text-center mb-8">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
-              How it works 🏡
+              How it works
             </h2>
             <p className="text-lg text-gray-600">Simple steps for hosts and travelers</p>
           </div>
@@ -1925,10 +1992,10 @@ const MyHostApp = () => {
           {/* Combined Grid - Hosts and Travelers */}
           <div className="grid md:grid-cols-2 gap-8">
             {/* For Hosts */}
-            <div className="bg-blue-50 rounded-xl p-6">
+            <div className="bg-gradient-to-br from-orange-50 to-rose-50 rounded-xl p-6 border-2 border-orange-200">
               <div className="flex items-center mb-4">
-                <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center mr-3">
-                  <Home className="w-5 h-5 text-white" />
+                <div className="w-10 h-10 bg-gradient-to-br from-orange-500 to-rose-600 rounded-lg flex items-center justify-center mr-3">
+                  <Users className="w-5 h-5 text-white" />
                 </div>
                 <h3 className="text-xl font-bold text-gray-900">For Hosts</h3>
               </div>
@@ -1940,7 +2007,7 @@ const MyHostApp = () => {
                   { step: "4", title: "Get Paid", description: "Secure payments to your account" }
                 ].map((item, idx) => (
                   <div key={idx} className="flex items-start space-x-3">
-                    <span className="text-lg font-bold text-blue-600">{item.step}</span>
+                    <span className="text-lg font-bold text-orange-600">{item.step}</span>
                     <div>
                       <h4 className="font-semibold text-gray-900 text-sm">{item.title}</h4>
                       <p className="text-xs text-gray-600">{item.description}</p>
@@ -1951,9 +2018,9 @@ const MyHostApp = () => {
             </div>
 
             {/* For Travelers */}
-            <div className="bg-green-50 rounded-xl p-6">
+            <div className="bg-gradient-to-br from-[var(--logo-primary)]/10 to-[var(--logo-secondary)]/10 rounded-xl p-6 border-2 border-[var(--logo-primary)]/20">
               <div className="flex items-center mb-4">
-                <div className="w-10 h-10 bg-green-600 rounded-lg flex items-center justify-center mr-3">
+                <div className="w-10 h-10 bg-gradient-to-br from-[var(--logo-primary)] to-[var(--logo-secondary)] rounded-lg flex items-center justify-center mr-3">
                   <Users className="w-5 h-5 text-white" />
                 </div>
                 <h3 className="text-xl font-bold text-gray-900">For Travelers</h3>
@@ -1966,7 +2033,7 @@ const MyHostApp = () => {
                   { step: "4", title: "Review", description: "Share your experience" }
                 ].map((item, idx) => (
                   <div key={idx} className="flex items-start space-x-3">
-                    <span className="text-lg font-bold text-green-600">{item.step}</span>
+                    <span className="text-lg font-bold text-[var(--logo-primary)]">{item.step}</span>
                     <div>
                       <h4 className="font-semibold text-gray-900 text-sm">{item.title}</h4>
                       <p className="text-xs text-gray-600">{item.description}</p>
@@ -2034,7 +2101,7 @@ const MyHostApp = () => {
                   <ul className="space-y-2">
                     <li>
                       <button 
-                        onClick={() => alert('Help Center - In production, this would open a help center page.')}
+                        onClick={() => setFooterModal('help')}
                         className="text-white/90 hover:text-white transition-colors text-sm"
                       >
                         Help Center
@@ -2042,7 +2109,7 @@ const MyHostApp = () => {
                     </li>
                     <li>
                       <button 
-                        onClick={() => alert('Contact Us - Email: support@myhost.com\nPhone: +254 XXX XXX XXX')}
+                        onClick={() => setFooterModal('contact')}
                         className="text-white/90 hover:text-white transition-colors text-sm"
                       >
                         Contact Us
@@ -2050,7 +2117,7 @@ const MyHostApp = () => {
                     </li>
                     <li>
                       <button 
-                        onClick={() => alert('FAQs - Frequently asked questions about bookings, payments, and hosting.')}
+                        onClick={() => setFooterModal('faq')}
                         className="text-white/90 hover:text-white transition-colors text-sm"
                       >
                         FAQs
@@ -2058,7 +2125,7 @@ const MyHostApp = () => {
                     </li>
                     <li>
                       <button 
-                        onClick={() => alert('Safety Tips - Important safety information for guests and hosts.')}
+                        onClick={() => setFooterModal('safety')}
                         className="text-white/90 hover:text-white transition-colors text-sm"
                       >
                         Safety Tips
@@ -2073,7 +2140,7 @@ const MyHostApp = () => {
                   <ul className="space-y-2">
                     <li>
                       <button 
-                        onClick={() => alert('Cookie Policy - We use cookies to enhance your experience. By using our site, you agree to our use of cookies.')}
+                        onClick={() => setFooterModal('cookie')}
                         className="text-white/90 hover:text-white transition-colors text-sm"
                       >
                         Cookie Policy
@@ -2081,7 +2148,7 @@ const MyHostApp = () => {
                     </li>
                     <li>
                       <button 
-                        onClick={() => alert('Privacy Policy - How we collect, use, and protect your personal information.')}
+                        onClick={() => setFooterModal('privacy')}
                         className="text-white/90 hover:text-white transition-colors text-sm"
                       >
                         Privacy Policy
@@ -2089,7 +2156,7 @@ const MyHostApp = () => {
                     </li>
                     <li>
                       <button 
-                        onClick={() => alert('Terms of Service - Terms and conditions for using MyHost platform.')}
+                        onClick={() => setFooterModal('terms')}
                         className="text-white/90 hover:text-white transition-colors text-sm"
                       >
                         Terms of Service
@@ -2097,7 +2164,7 @@ const MyHostApp = () => {
                     </li>
                     <li>
                       <button 
-                        onClick={() => alert('Refund Policy - Information about refunds and cancellations.')}
+                        onClick={() => setFooterModal('refund')}
                         className="text-white/90 hover:text-white transition-colors text-sm"
                       >
                         Refund Policy
@@ -2112,7 +2179,7 @@ const MyHostApp = () => {
                   <ul className="space-y-2">
                     <li>
                       <button 
-                        onClick={() => alert('Accessibility Statement - MyHost is committed to making our platform accessible to all users.')}
+                        onClick={() => setFooterModal('accessibility')}
                         className="text-white/90 hover:text-white transition-colors text-sm"
                       >
                         Accessibility Statement
@@ -2120,10 +2187,7 @@ const MyHostApp = () => {
                     </li>
                     <li>
                       <button 
-                        onClick={() => {
-                          // Increase font size or other accessibility features
-                          alert('Accessibility Features - Options to adjust text size, contrast, and other accessibility settings.');
-                        }}
+                        onClick={() => setFooterModal('features')}
                         className="text-white/90 hover:text-white transition-colors text-sm"
                       >
                         Accessibility Features
@@ -2131,7 +2195,7 @@ const MyHostApp = () => {
                     </li>
                     <li>
                       <button 
-                        onClick={() => alert('Report an Issue - Report accessibility issues or request accommodations.')}
+                        onClick={() => setFooterModal('report')}
                         className="text-white/90 hover:text-white transition-colors text-sm"
                       >
                         Report an Issue
@@ -3620,6 +3684,241 @@ const MyHostApp = () => {
             setShowUserMenu(false);
           }}
         ></div>
+      )}
+
+      {/* Footer Modal */}
+      {footerModal && (
+        <div 
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm"
+          onClick={() => setFooterModal(null)}
+        >
+          <div 
+            className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full mx-4 max-h-[80vh] overflow-y-auto"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between rounded-t-2xl">
+              <h2 className="text-2xl font-bold text-gray-900">
+                {footerModal === 'help' && 'Help Center'}
+                {footerModal === 'contact' && 'Contact Us'}
+                {footerModal === 'faq' && 'Frequently Asked Questions'}
+                {footerModal === 'safety' && 'Safety Tips'}
+                {footerModal === 'cookie' && 'Cookie Policy'}
+                {footerModal === 'privacy' && 'Privacy Policy'}
+                {footerModal === 'terms' && 'Terms of Service'}
+                {footerModal === 'refund' && 'Refund Policy'}
+                {footerModal === 'accessibility' && 'Accessibility Statement'}
+                {footerModal === 'features' && 'Accessibility Features'}
+                {footerModal === 'report' && 'Report an Issue'}
+              </h2>
+              <button
+                onClick={() => setFooterModal(null)}
+                className="text-gray-400 hover:text-gray-600 transition-colors"
+              >
+                <X className="w-6 h-6" />
+              </button>
+            </div>
+            <div className="p-6">
+              {footerModal === 'help' && (
+                <div className="space-y-4">
+                  <p className="text-gray-700">Welcome to the MyHost Help Center. Here you can find answers to common questions and get support.</p>
+                  <div>
+                    <h3 className="font-semibold text-gray-900 mb-2">Getting Started</h3>
+                    <p className="text-gray-600">Learn how to create an account, search for properties, and make your first booking.</p>
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-gray-900 mb-2">Booking & Payments</h3>
+                    <p className="text-gray-600">Information about booking properties, payment methods, and cancellation policies.</p>
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-gray-900 mb-2">Hosting</h3>
+                    <p className="text-gray-600">Resources for hosts on how to list properties, manage bookings, and get paid.</p>
+                  </div>
+                </div>
+              )}
+              {footerModal === 'contact' && (
+                <div className="space-y-4">
+                  <p className="text-gray-700">Get in touch with our support team.</p>
+                  <div>
+                    <h3 className="font-semibold text-gray-900 mb-2">Email</h3>
+                    <p className="text-gray-600">support@myhost.com</p>
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-gray-900 mb-2">Phone</h3>
+                    <p className="text-gray-600">+254 XXX XXX XXX</p>
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-gray-900 mb-2">Business Hours</h3>
+                    <p className="text-gray-600">Monday - Friday: 9:00 AM - 6:00 PM EAT</p>
+                  </div>
+                </div>
+              )}
+              {footerModal === 'faq' && (
+                <div className="space-y-6">
+                  <div>
+                    <h3 className="font-semibold text-gray-900 mb-2">How do I book a property?</h3>
+                    <p className="text-gray-600">Search for properties using the filters, select your dates, and complete the booking process with secure payment.</p>
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-gray-900 mb-2">What payment methods are accepted?</h3>
+                    <p className="text-gray-600">We accept M-Pesa, credit cards, and bank transfers. All payments are processed securely.</p>
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-gray-900 mb-2">Can I cancel my booking?</h3>
+                    <p className="text-gray-600">Cancellation policies vary by property. Check the property details for specific cancellation terms.</p>
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-gray-900 mb-2">How do I become a host?</h3>
+                    <p className="text-gray-600">Click on "Become a Host" in the navigation menu and follow the steps to list your property.</p>
+                  </div>
+                </div>
+              )}
+              {footerModal === 'safety' && (
+                <div className="space-y-4">
+                  <p className="text-gray-700">Your safety is our priority. Here are important safety tips for guests and hosts.</p>
+                  <div>
+                    <h3 className="font-semibold text-gray-900 mb-2">For Guests</h3>
+                    <ul className="list-disc list-inside text-gray-600 space-y-1">
+                      <li>Always verify property details before booking</li>
+                      <li>Keep emergency contacts handy</li>
+                      <li>Read property reviews from previous guests</li>
+                      <li>Communicate through the platform</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-gray-900 mb-2">For Hosts</h3>
+                    <ul className="list-disc list-inside text-gray-600 space-y-1">
+                      <li>Verify guest identities before confirming bookings</li>
+                      <li>Maintain clear communication</li>
+                      <li>Ensure property meets safety standards</li>
+                      <li>Report any issues immediately</li>
+                    </ul>
+                  </div>
+                </div>
+              )}
+              {footerModal === 'cookie' && (
+                <div className="space-y-4">
+                  <p className="text-gray-700">We use cookies to enhance your experience on MyHost. By using our site, you agree to our use of cookies.</p>
+                  <div>
+                    <h3 className="font-semibold text-gray-900 mb-2">What are cookies?</h3>
+                    <p className="text-gray-600">Cookies are small text files stored on your device that help us provide a better user experience.</p>
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-gray-900 mb-2">How we use cookies</h3>
+                    <ul className="list-disc list-inside text-gray-600 space-y-1">
+                      <li>To remember your preferences</li>
+                      <li>To analyze site traffic</li>
+                      <li>To improve our services</li>
+                    </ul>
+                  </div>
+                </div>
+              )}
+              {footerModal === 'privacy' && (
+                <div className="space-y-4">
+                  <p className="text-gray-700">We are committed to protecting your privacy. This policy explains how we collect, use, and protect your personal information.</p>
+                  <div>
+                    <h3 className="font-semibold text-gray-900 mb-2">Information We Collect</h3>
+                    <p className="text-gray-600">We collect information you provide when creating an account, making bookings, or contacting us.</p>
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-gray-900 mb-2">How We Use Your Information</h3>
+                    <p className="text-gray-600">We use your information to process bookings, communicate with you, and improve our services.</p>
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-gray-900 mb-2">Data Security</h3>
+                    <p className="text-gray-600">We implement industry-standard security measures to protect your personal information.</p>
+                  </div>
+                </div>
+              )}
+              {footerModal === 'terms' && (
+                <div className="space-y-4">
+                  <p className="text-gray-700">These terms and conditions govern your use of the MyHost platform.</p>
+                  <div>
+                    <h3 className="font-semibold text-gray-900 mb-2">User Responsibilities</h3>
+                    <p className="text-gray-600">Users must provide accurate information and use the platform responsibly.</p>
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-gray-900 mb-2">Booking Terms</h3>
+                    <p className="text-gray-600">Bookings are subject to property-specific terms and cancellation policies.</p>
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-gray-900 mb-2">Platform Rules</h3>
+                    <p className="text-gray-600">Users must comply with all applicable laws and platform guidelines.</p>
+                  </div>
+                </div>
+              )}
+              {footerModal === 'refund' && (
+                <div className="space-y-4">
+                  <p className="text-gray-700">Our refund policy outlines the terms for cancellations and refunds.</p>
+                  <div>
+                    <h3 className="font-semibold text-gray-900 mb-2">Cancellation Policy</h3>
+                    <p className="text-gray-600">Refund eligibility depends on the property's cancellation policy and timing of cancellation.</p>
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-gray-900 mb-2">Refund Processing</h3>
+                    <p className="text-gray-600">Refunds are processed within 5-10 business days to the original payment method.</p>
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-gray-900 mb-2">Non-Refundable Items</h3>
+                    <p className="text-gray-600">Service fees and certain booking types may be non-refundable.</p>
+                  </div>
+                </div>
+              )}
+              {footerModal === 'accessibility' && (
+                <div className="space-y-4">
+                  <p className="text-gray-700">MyHost is committed to making our platform accessible to all users, regardless of ability.</p>
+                  <div>
+                    <h3 className="font-semibold text-gray-900 mb-2">Our Commitment</h3>
+                    <p className="text-gray-600">We strive to meet WCAG 2.1 Level AA standards for web accessibility.</p>
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-gray-900 mb-2">Accessibility Features</h3>
+                    <ul className="list-disc list-inside text-gray-600 space-y-1">
+                      <li>Keyboard navigation support</li>
+                      <li>Screen reader compatibility</li>
+                      <li>High contrast options</li>
+                      <li>Text size adjustments</li>
+                    </ul>
+                  </div>
+                </div>
+              )}
+              {footerModal === 'features' && (
+                <div className="space-y-4">
+                  <p className="text-gray-700">We offer various accessibility features to enhance your experience.</p>
+                  <div>
+                    <h3 className="font-semibold text-gray-900 mb-2">Text Size</h3>
+                    <p className="text-gray-600">Adjust text size using your browser's zoom controls (Ctrl/Cmd + or -).</p>
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-gray-900 mb-2">Contrast</h3>
+                    <p className="text-gray-600">Use high contrast mode in your operating system settings.</p>
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-gray-900 mb-2">Keyboard Navigation</h3>
+                    <p className="text-gray-600">All features can be accessed using keyboard shortcuts and tab navigation.</p>
+                  </div>
+                </div>
+              )}
+              {footerModal === 'report' && (
+                <div className="space-y-4">
+                  <p className="text-gray-700">Report accessibility issues or request accommodations.</p>
+                  <div>
+                    <h3 className="font-semibold text-gray-900 mb-2">How to Report</h3>
+                    <p className="text-gray-600">Contact us at support@myhost.com with "Accessibility Issue" in the subject line.</p>
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-gray-900 mb-2">What to Include</h3>
+                    <ul className="list-disc list-inside text-gray-600 space-y-1">
+                      <li>Description of the issue</li>
+                      <li>Page or feature where it occurred</li>
+                      <li>Browser and device information</li>
+                      <li>Steps to reproduce</li>
+                    </ul>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
       )}
 
       {/* Search Suggestions Overlay */}
