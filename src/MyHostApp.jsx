@@ -1690,16 +1690,6 @@ const MyHostApp = () => {
                 {/* Gradient Overlay on Hover */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 
-                {/* Guest Favorite Badge - Premium Style */}
-                {property.rating >= 4.5 && (
-                  <div className="absolute top-4 left-4 bg-white px-3 py-1.5 rounded-lg shadow-lg backdrop-blur-sm">
-                    <div className="flex items-center space-x-1.5">
-                      <Star className="w-3.5 h-3.5 fill-[var(--logo-primary)] text-[var(--logo-primary)]" />
-                      <span className="text-xs font-semibold text-gray-900">Guest favorite</span>
-                </div>
-                  </div>
-                )}
-                
                 {/* Image Carousel Dots - Refined */}
                 <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-1.5 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                   {[1, 2, 3, 4, 5].map((dot, i) => (
@@ -2632,16 +2622,6 @@ const MyHostApp = () => {
                     {/* Gradient Overlay on Hover */}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     
-                    {/* Guest Favorite Badge */}
-                    {property.rating >= 4.5 && (
-                      <div className="absolute top-4 left-4 bg-white px-3 py-1.5 rounded-lg shadow-lg backdrop-blur-sm">
-                        <div className="flex items-center space-x-1.5">
-                          <Star className="w-3.5 h-3.5 fill-[var(--logo-primary)] text-[var(--logo-primary)]" />
-                          <span className="text-xs font-semibold text-gray-900">Guest favorite</span>
-                        </div>
-                      </div>
-                    )}
-                    
                     {/* Favorite Button */}
                     <button 
                       onClick={(e) => {
@@ -2859,16 +2839,6 @@ const MyHostApp = () => {
                     
                     {/* Gradient Overlay on Hover */}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    
-                    {/* Guest Favorite Badge */}
-                    {property.rating >= 4.5 && (
-                      <div className="absolute top-4 left-4 bg-white px-3 py-1.5 rounded-lg shadow-lg backdrop-blur-sm">
-                        <div className="flex items-center space-x-1.5">
-                          <Star className="w-3.5 h-3.5 fill-[var(--logo-primary)] text-[var(--logo-primary)]" />
-                          <span className="text-xs font-semibold text-gray-900">Guest favorite</span>
-                        </div>
-                      </div>
-                    )}
                     
                     {/* Favorite Button */}
                     <button 
