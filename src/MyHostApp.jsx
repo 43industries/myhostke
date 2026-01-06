@@ -76,64 +76,6 @@ const MyHostApp = () => {
   };
   
   const [properties, setProperties] = useState([
-    {
-      id: 1,
-      title: "Lakeside Villa",
-      location: "Kisumu, Kenya",
-      description: "Beautiful 4-bedroom villa with stunning lake view. Perfect for families and groups.",
-      rooms: 4,
-      dailyRate: 5000,
-      amenities: ["WiFi", "Pool", "Garden", "Parking", "Kitchen", "Washing Machine"],
-      host: "Jane Kimani",
-      caretaker: "John Ochieng",
-      caretakerPhoto: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop",
-      rating: 4.8,
-      reviews: 12,
-      image: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&h=600&fit=crop",
-      images: [
-        "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&h=600&fit=crop",
-        "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&h=600&fit=crop",
-        "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&h=600&fit=crop"
-      ]
-    },
-    {
-      id: 2,
-      title: "Mountain Retreat",
-      location: "Nanyuki, Kenya",
-      description: "Cozy 3-bedroom house near Mt. Kenya with fireplace and garden views.",
-      rooms: 3,
-      dailyRate: 4000,
-      amenities: ["WiFi", "Fireplace", "Garden", "Kitchen", "Parking"],
-      host: "Peter Mwangi",
-      caretaker: "Mary Wanjiku",
-      caretakerPhoto: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&h=200&fit=crop",
-      rating: 4.9,
-      reviews: 8,
-      image: "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=800&h=600&fit=crop",
-      images: [
-        "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=800&h=600&fit=crop",
-        "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=800&h=600&fit=crop"
-      ]
-    },
-    {
-      id: 3,
-      title: "Countryside Cottage",
-      location: "Nakuru, Kenya",
-      description: "Peaceful 2-bedroom cottage with farm views. Ideal for couples and small families.",
-      rooms: 2,
-      dailyRate: 3000,
-      amenities: ["WiFi", "Garden", "Kitchen", "Parking"],
-      host: "Sarah Njeri",
-      caretaker: "David Kamau",
-      caretakerPhoto: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&h=200&fit=crop",
-      rating: 4.7,
-      reviews: 15,
-      image: "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&h=600&fit=crop",
-      images: [
-        "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&h=600&fit=crop",
-        "https://images.unsplash.com/photo-1600607687644-c7171b42498b?w=800&h=600&fit=crop"
-      ]
-    }
   ]);
 
   const [bookingForm, setBookingForm] = useState({
@@ -1599,30 +1541,6 @@ const MyHostApp = () => {
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-        
-        {/* Service Descriptions Below Category Boxes */}
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6 mt-8">
-          <div className="text-center">
-            <h4 className="font-semibold text-gray-900 mb-2">Properties</h4>
-            <p className="text-sm text-gray-600">Browse all available countryside stays with urban ambience</p>
-          </div>
-          <div className="text-center">
-            <h4 className="font-semibold text-gray-900 mb-2">Group Hosting</h4>
-            <p className="text-sm text-gray-600">Perfect for families and groups - properties with 3+ rooms</p>
-          </div>
-          <div className="text-center">
-            <h4 className="font-semibold text-gray-900 mb-2">Host Exchange</h4>
-            <p className="text-sm text-gray-600">The same families can host people traveling - reciprocal hosting</p>
-          </div>
-          <div className="text-center">
-            <h4 className="font-semibold text-gray-900 mb-2">Student Longstay</h4>
-            <p className="text-sm text-gray-600">Extensions linking students to schools and property owners around schools</p>
-          </div>
-          <div className="text-center">
-            <h4 className="font-semibold text-gray-900 mb-2">MyStore Units</h4>
-            <p className="text-sm text-gray-600">Rent commercial spaces like garages and warehouses for your business needs</p>
           </div>
         </div>
       </div>
