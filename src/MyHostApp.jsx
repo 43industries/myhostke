@@ -1667,26 +1667,6 @@ const MyHostApp = () => {
         </div>
       </div>
         
-      {/* Search Results Summary - Premium */}
-      <div id="properties-section" className="max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 py-8">
-        <div className="flex items-center justify-between flex-wrap gap-6 bg-gradient-to-br from-[var(--logo-primary)]/10 via-[var(--logo-secondary)]/10 to-[var(--logo-accent)]/10 rounded-2xl p-6 backdrop-blur-sm">
-          <div>
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2 tracking-tight">
-              Popular
-            </h2>
-            <p className="text-lg text-gray-600 font-light">
-              {filteredProperties.length.toLocaleString()}+ budget-friendly countryside stays with urban ambience
-            </p>
-          </div>
-          <div className="flex items-center space-x-2.5 px-5 py-3 border-2 border-[var(--logo-primary)]/20 rounded-xl bg-[var(--logo-primary)]/10 backdrop-blur-sm shadow-sm">
-            <Star className="w-4 h-4 text-[var(--logo-primary)] fill-[var(--logo-primary)]" />
-            <span className="text-sm font-semibold text-[var(--logo-dark)]">
-              Starting at KSh {Math.min(...properties.map(p => p.dailyRate)).toLocaleString()}/night
-            </span>
-          </div>
-        </div>
-      </div>
-
       {/* Property Grid - Expanded Layout */}
       <div className="max-w-[1920px] mx-auto px-6 sm:px-8 lg:px-12">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-8">
@@ -1834,23 +1814,7 @@ const MyHostApp = () => {
           ))}
         </div>
       </div>
-      <div className="grid md:grid-cols-3 gap-8">
-        <div className="group relative glass p-8 rounded-3xl card-shadow hover:card-shadow-hover transition-all duration-500 transform hover:-translate-y-2 overflow-hidden">
-          <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-rose-100 to-pink-100 rounded-full blur-2xl opacity-50 group-hover:opacity-75 transition-opacity"></div>
-          <div className="relative z-10">
-            <div className="w-16 h-16 bg-gradient-to-br from-rose-500 to-pink-600 rounded-2xl flex items-center justify-center mb-6 transform group-hover:rotate-6 group-hover:scale-110 transition-all duration-300">
-              <Home className="w-8 h-8 text-white" />
-            </div>
-            <h3 className="text-2xl font-extrabold mb-3 text-gray-900">Short & Long Stay</h3>
-            <p className="text-gray-600 leading-relaxed mb-4">Budget accommodation for countryside travelers. Perfect for those seeking decent accommodation in smaller towns and rural areas with flexible duration options.</p>
-            <div className="flex items-center space-x-2">
-              <div className="w-3 h-3 bg-gradient-to-br from-rose-500 to-pink-600 rounded-full pulse-animation"></div>
-              <div className="w-3 h-3 bg-gradient-to-br from-orange-500 to-rose-500 rounded-full pulse-animation" style={{ animationDelay: '0.2s' }}></div>
-              <div className="w-3 h-3 bg-gradient-to-br from-[var(--logo-primary)] to-[var(--logo-accent)] rounded-full pulse-animation" style={{ animationDelay: '0.4s' }}></div>
-            </div>
-          </div>
-        </div>
-        
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
         <div className="group relative glass p-8 rounded-3xl card-shadow hover:card-shadow-hover transition-all duration-500 transform hover:-translate-y-2 overflow-hidden">
           <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-orange-100 to-rose-100 rounded-full blur-2xl opacity-50 group-hover:opacity-75 transition-opacity"></div>
           <div className="relative z-10">
@@ -1904,29 +1868,29 @@ const MyHostApp = () => {
 
           {/* Stats Row - Compact */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-            <div className="text-center p-4 bg-gray-50 rounded-lg">
-              <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center mx-auto mb-2">
+            <div className="text-center p-4 rounded-lg bg-gradient-to-br from-orange-50 to-rose-50">
+              <div className="w-10 h-10 bg-gradient-to-br from-orange-500 to-rose-600 rounded-lg flex items-center justify-center mx-auto mb-2">
                 <Home className="w-5 h-5 text-white" />
               </div>
               <p className="text-2xl font-bold text-gray-900">150+</p>
               <p className="text-xs text-gray-600">Properties</p>
             </div>
-            <div className="text-center p-4 bg-gray-50 rounded-lg">
-              <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center mx-auto mb-2">
+            <div className="text-center p-4 rounded-lg bg-gradient-to-br from-emerald-50 to-green-50">
+              <div className="w-10 h-10 bg-gradient-to-br from-emerald-500 to-green-600 rounded-lg flex items-center justify-center mx-auto mb-2">
                 <Users className="w-5 h-5 text-white" />
               </div>
               <p className="text-2xl font-bold text-gray-900">5,000+</p>
               <p className="text-xs text-gray-600">Guests</p>
             </div>
-            <div className="text-center p-4 bg-gray-50 rounded-lg">
-              <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center mx-auto mb-2">
+            <div className="text-center p-4 rounded-lg bg-gradient-to-br from-sky-50 to-blue-50">
+              <div className="w-10 h-10 bg-gradient-to-br from-sky-500 to-blue-600 rounded-lg flex items-center justify-center mx-auto mb-2">
                 <MapPin className="w-5 h-5 text-white" />
               </div>
               <p className="text-2xl font-bold text-gray-900">20+</p>
               <p className="text-xs text-gray-600">Locations</p>
             </div>
-            <div className="text-center p-4 bg-gray-50 rounded-lg">
-              <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center mx-auto mb-2">
+            <div className="text-center p-4 rounded-lg bg-gradient-to-br from-violet-50 to-purple-50">
+              <div className="w-10 h-10 bg-gradient-to-br from-violet-500 to-purple-600 rounded-lg flex items-center justify-center mx-auto mb-2">
                 <Star className="w-5 h-5 text-white fill-white" />
               </div>
               <p className="text-2xl font-bold text-gray-900">4.8</p>
@@ -1936,9 +1900,9 @@ const MyHostApp = () => {
 
           {/* Key Benefits Grid - Compact */}
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
-            <div className="p-5 border border-gray-200 rounded-lg hover:shadow-md transition-shadow">
-              <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center mb-3">
-                <Shield className="w-5 h-5 text-green-600" />
+            <div className="p-5 border border-emerald-200 rounded-lg hover:shadow-md transition-shadow bg-gradient-to-br from-emerald-50 to-green-50">
+              <div className="w-10 h-10 bg-gradient-to-br from-emerald-500 to-green-600 rounded-lg flex items-center justify-center mb-3">
+                <Shield className="w-5 h-5 text-white" />
               </div>
               <h3 className="text-lg font-bold text-gray-900 mb-2">Secure Payments</h3>
               <p className="text-sm text-gray-600">
@@ -1946,9 +1910,9 @@ const MyHostApp = () => {
               </p>
             </div>
 
-            <div className="p-5 border border-gray-200 rounded-lg hover:shadow-md transition-shadow">
-              <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center mb-3">
-                <CheckCircle className="w-5 h-5 text-blue-600" />
+            <div className="p-5 border border-cyan-200 rounded-lg hover:shadow-md transition-shadow bg-gradient-to-br from-cyan-50 to-blue-50">
+              <div className="w-10 h-10 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-lg flex items-center justify-center mb-3">
+                <CheckCircle className="w-5 h-5 text-white" />
               </div>
               <h3 className="text-lg font-bold text-gray-900 mb-2">Verified Properties</h3>
               <p className="text-sm text-gray-600">
@@ -1956,9 +1920,9 @@ const MyHostApp = () => {
               </p>
             </div>
 
-            <div className="p-5 border border-gray-200 rounded-lg hover:shadow-md transition-shadow">
-              <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center mb-3">
-                <Clock className="w-5 h-5 text-purple-600" />
+            <div className="p-5 border border-violet-200 rounded-lg hover:shadow-md transition-shadow bg-gradient-to-br from-violet-50 to-purple-50">
+              <div className="w-10 h-10 bg-gradient-to-br from-violet-500 to-purple-600 rounded-lg flex items-center justify-center mb-3">
+                <Clock className="w-5 h-5 text-white" />
               </div>
               <h3 className="text-lg font-bold text-gray-900 mb-2">24/7 Support</h3>
               <p className="text-sm text-gray-600">
@@ -1966,9 +1930,9 @@ const MyHostApp = () => {
               </p>
             </div>
 
-            <div className="p-5 border border-gray-200 rounded-lg hover:shadow-md transition-shadow">
-              <div className="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center mb-3">
-                <Zap className="w-5 h-5 text-orange-600" />
+            <div className="p-5 border border-amber-200 rounded-lg hover:shadow-md transition-shadow bg-gradient-to-br from-amber-50 to-yellow-50">
+              <div className="w-10 h-10 bg-gradient-to-br from-amber-500 to-yellow-600 rounded-lg flex items-center justify-center mb-3">
+                <Zap className="w-5 h-5 text-white" />
               </div>
               <h3 className="text-lg font-bold text-gray-900 mb-2">Instant Booking</h3>
               <p className="text-sm text-gray-600">
