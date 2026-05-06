@@ -541,10 +541,10 @@ const MyHostApp = () => {
                           type="range"
                           min={minPrice}
                           max={maxPrice}
-                          step={500}
+                          step={100}
                           value={priceFilter || maxPrice}
                           onChange={(e) => setPriceFilter(parseInt(e.target.value))}
-                          className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-[var(--logo-primary)]"
+                          className="price-range-slider w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-[var(--logo-primary)]"
                         />
                         <div className="flex justify-between text-sm text-gray-600 mt-2">
                           <span>KSh {minPrice.toLocaleString()}</span>
@@ -1208,11 +1208,11 @@ const MyHostApp = () => {
           </div>
 
           {/* Search Bar Overlay - Prominent Horizontal Layout */}
-          <div className="max-w-6xl mx-auto">
-            <div className="bg-white rounded-2xl shadow-2xl p-4 md:p-6">
+          <div className="max-w-6xl mx-auto relative z-20">
+            <div className="bg-white/95 backdrop-blur-sm border border-white/70 rounded-2xl shadow-2xl p-4 md:p-6">
               <div className="flex flex-col md:flex-row items-stretch gap-2 md:gap-0">
                 {/* WHERE Field */}
-                <div className="flex-1 border-r-0 md:border-r border-gray-200 pr-0 md:pr-4">
+                <div className="flex-1 border border-gray-200/90 md:border-r md:border-l-0 md:border-t-0 md:border-b-0 rounded-xl md:rounded-none px-3 py-2 md:px-0 md:py-0 pr-0 md:pr-4 bg-white">
                   <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wide mb-2">WHERE</label>
                   <input
                     type="text"
@@ -1227,7 +1227,7 @@ const MyHostApp = () => {
                 </div>
 
                 {/* CHECK IN Field */}
-                <div className="flex-1 border-r-0 md:border-r border-gray-200 pr-0 md:pr-4 relative">
+                <div className="flex-1 border border-gray-200/90 md:border-r md:border-l-0 md:border-t-0 md:border-b-0 rounded-xl md:rounded-none px-3 py-2 md:px-0 md:py-0 pr-0 md:pr-4 relative bg-white">
                   <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wide mb-2">CHECK IN</label>
                   <div 
                     className="flex items-center space-x-2 cursor-pointer"
@@ -1283,7 +1283,7 @@ const MyHostApp = () => {
                 </div>
 
                 {/* CHECK OUT Field */}
-                <div className="flex-1 border-r-0 md:border-r border-gray-200 pr-0 md:pr-4 relative">
+                <div className="flex-1 border border-gray-200/90 md:border-r md:border-l-0 md:border-t-0 md:border-b-0 rounded-xl md:rounded-none px-3 py-2 md:px-0 md:py-0 pr-0 md:pr-4 relative bg-white">
                   <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wide mb-2">CHECK OUT</label>
                   <div 
                     className="flex items-center space-x-2 cursor-pointer"
@@ -1361,7 +1361,7 @@ const MyHostApp = () => {
                 </div>
 
                 {/* GUESTS Field */}
-                <div className="flex-1 border-r-0 md:border-r border-gray-200 pr-0 md:pr-4">
+                <div className="flex-1 border border-gray-200/90 md:border-r md:border-l-0 md:border-t-0 md:border-b-0 rounded-xl md:rounded-none px-3 py-2 md:px-0 md:py-0 pr-0 md:pr-4 bg-white">
                   <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wide mb-2">GUESTS</label>
                   <input
                     type="number"
@@ -2374,7 +2374,7 @@ const MyHostApp = () => {
               
               {/* Search Suggestions Dropdown for Search Page */}
               {showSearchSuggestions && (searchQuery || searchFocused) && (
-                <div className="absolute top-full left-0 right-0 mt-3 bg-white border-2 border-[var(--logo-primary)] rounded-2xl shadow-2xl z-50 overflow-hidden">
+                <div className="absolute top-full left-0 right-0 mt-3 bg-white border-2 border-[var(--logo-primary)] rounded-2xl shadow-2xl z-[80] overflow-hidden">
                   {searchQuery && searchSuggestions.length > 0 ? (
                     <div className="max-h-96 overflow-y-auto">
                       <div className="p-3 border-b border-gray-200 bg-gray-50">
