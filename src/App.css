@@ -768,3 +768,36 @@ img[loading="lazy"].loaded {
   box-shadow: 0 8px 18px rgba(234, 88, 12, 0.45);
 }
 
+/* Filled icon visual system */
+.icon-filled-theme .lucide {
+  color: inherit;
+  transition: color 0.18s ease, background-color 0.18s ease, border-color 0.18s ease;
+}
+
+.icon-filled {
+  flex-shrink: 0;
+}
+
+.icon-filled-active {
+  background: #f97316;
+  color: #ffffff;
+  border-color: #ea580c;
+}
+
+/* Normalize icon-heavy interactions to look intentional, not flashy */
+.icon-filled-theme .group:hover .lucide,
+.icon-filled-theme .lucide[class*="group-hover:scale"],
+.icon-filled-theme .lucide[class*="hover:scale"],
+.icon-filled-theme .lucide[class*="animate-pulse"] {
+  transform: none !important;
+  animation: none !important;
+}
+
+/* Site-wide fallback so untouched icons also look filled and consistent */
+.icon-filled-theme .lucide:not(.icon-unfilled) {
+  padding: 0.25rem;
+  border-radius: 9999px;
+  background: rgba(251, 146, 60, 0.14);
+  border: 1px solid rgba(251, 146, 60, 0.35);
+}
+

@@ -333,6 +333,32 @@ const MyHostApp = () => {
     return 0; // popular - keep original order
   });
 
+  const FilledIcon = ({ Icon, size = 'md', tone = 'brand', className = '' }) => {
+    const sizeClasses = {
+      sm: 'w-7 h-7',
+      md: 'w-8 h-8',
+      lg: 'w-10 h-10'
+    };
+
+    const iconSizes = {
+      sm: 'w-4 h-4',
+      md: 'w-5 h-5',
+      lg: 'w-6 h-6'
+    };
+
+    const toneClasses = {
+      brand: 'bg-orange-600 text-white border border-orange-700',
+      light: 'bg-gray-100 text-gray-700 border border-gray-200',
+      contrast: 'bg-white text-orange-700 border border-orange-200'
+    };
+
+    return (
+      <span className={`icon-filled inline-flex items-center justify-center rounded-full ${sizeClasses[size]} ${toneClasses[tone]} ${className}`}>
+        <Icon className={iconSizes[size]} />
+      </span>
+    );
+  };
+
   // Clean Modern Header - VacationRenter Style
   const Header = () => (
     <header className="sticky top-0 z-50 bg-white border-b-4 border-[var(--logo-primary)] shadow-xl">
@@ -380,15 +406,15 @@ const MyHostApp = () => {
               className="flex items-center space-x-1.5 px-3 md:px-4 py-1.5 md:py-2 text-xs md:text-sm font-extrabold bg-orange-600 text-white rounded-full hover:bg-orange-700 transition-all duration-300 shadow-xl hover:shadow-2xl hover:scale-105 active:scale-95 cursor-pointer border-2 border-orange-700"
               style={{ minWidth: '120px', display: 'flex', boxShadow: '0 4px 20px rgba(0, 0, 0, 0.3)' }}
             >
-              <Plus className="w-3 h-3 md:w-4 md:h-4 text-black" />
+              <FilledIcon Icon={Plus} size="md" tone="contrast" />
               <span className="whitespace-nowrap text-black">Become a Host</span>
             </button>
             <button 
               onClick={() => setShowNotifications(!showNotifications)}
-              className="flex items-center justify-center w-9 h-9 md:w-10 md:h-10 text-orange-600 hover:text-white bg-white hover:bg-orange-600 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-110 active:scale-95 border-2 border-orange-600 relative group"
+              className="flex items-center justify-center w-9 h-9 md:w-10 md:h-10 text-orange-600 bg-white rounded-full transition-colors duration-200 shadow-lg border-2 border-orange-600 relative"
               style={{ boxShadow: '0 2px 10px rgba(251, 146, 60, 0.3)' }}
             >
-              <Bell className={`w-4 h-4 md:w-5 md:h-5 text-orange-600 group-hover:text-white transition-all duration-300 ${showNotifications ? 'animate-pulse' : 'group-hover:scale-110'}`} />
+              <FilledIcon Icon={Bell} size="md" tone="contrast" />
               {showNotifications && (
                 <div className="absolute top-full right-0 mt-3 bg-gradient-to-br from-white via-[var(--logo-primary)]/5 to-white backdrop-blur-md border-2 border-[var(--logo-primary)] rounded-2xl shadow-2xl z-50 p-5 min-w-[320px] animate-in fade-in slide-in-from-top-2">
                   <div className="flex items-center justify-between mb-4">
@@ -404,7 +430,7 @@ const MyHostApp = () => {
             </button>
               </div>
                   <div className="flex flex-col items-center justify-center py-8">
-                    <Bell className="w-12 h-12 text-gray-300 mb-3" />
+                    <FilledIcon Icon={Bell} size="lg" tone="light" className="mb-3" />
                     <p className="text-sm text-gray-600 font-medium">No new notifications</p>
                   </div>
                 </div>
@@ -418,23 +444,23 @@ const MyHostApp = () => {
                   alert('You have no favorite properties yet');
                 }
               }}
-              className="flex items-center justify-center w-9 h-9 md:w-10 md:h-10 text-orange-600 hover:text-white bg-white hover:bg-orange-600 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-110 active:scale-95 border-2 border-orange-600 relative group"
+              className="flex items-center justify-center w-9 h-9 md:w-10 md:h-10 text-orange-600 bg-white rounded-full transition-colors duration-200 shadow-lg border-2 border-orange-600 relative"
               style={{ boxShadow: '0 2px 10px rgba(251, 146, 60, 0.3)' }}
             >
-              <Heart className={`w-4 h-4 md:w-5 md:h-5 text-orange-600 group-hover:text-white transition-all duration-300 ${favorites.size > 0 ? 'fill-orange-600 text-orange-600 scale-110' : 'group-hover:scale-110'}`} />
+              <FilledIcon Icon={Heart} size="md" tone="contrast" className={favorites.size > 0 ? 'icon-filled-active' : ''} />
               {favorites.size > 0 && (
-                <span className="absolute -top-1 -right-1 bg-gradient-to-r from-[var(--logo-primary)] to-[var(--logo-accent)] text-white text-xs rounded-full w-6 h-6 flex items-center justify-center font-bold shadow-lg animate-pulse">
+                <span className="absolute -top-1 -right-1 bg-gradient-to-r from-[var(--logo-primary)] to-[var(--logo-accent)] text-white text-xs rounded-full w-6 h-6 flex items-center justify-center font-bold shadow-lg">
                   {favorites.size}
                 </span>
               )}
             </button>
             <button 
               onClick={() => setShowUserMenu(!showUserMenu)}
-              className="flex items-center space-x-1.5 px-3 py-1.5 md:px-4 md:py-2 bg-white border-2 border-orange-600 rounded-full hover:border-orange-700 hover:bg-orange-600 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 active:scale-95 relative group"
+              className="flex items-center space-x-1.5 px-3 py-1.5 md:px-4 md:py-2 bg-white border-2 border-orange-600 rounded-full hover:border-orange-700 transition-colors duration-200 shadow-lg relative"
               style={{ boxShadow: '0 2px 10px rgba(251, 146, 60, 0.3)' }}
             >
-              <Menu className={`w-4 h-4 md:w-4 md:h-4 text-orange-600 group-hover:text-white transition-colors duration-300 ${showUserMenu ? 'text-white' : ''}`} />
-              <User className={`w-4 h-4 md:w-4 md:h-4 text-orange-600 group-hover:text-white transition-colors duration-300 ${showUserMenu ? 'text-white' : ''}`} />
+              <FilledIcon Icon={Menu} size="md" tone="contrast" />
+              <FilledIcon Icon={User} size="md" tone="contrast" />
               {showUserMenu && (
                 <div className="absolute top-full right-0 mt-2 bg-gradient-to-br from-white via-[var(--logo-primary)]/5 to-white backdrop-blur-md border-2 border-[var(--logo-primary)]/30 rounded-xl shadow-2xl z-50 p-2 min-w-[200px]">
                   {currentUser ? (
@@ -1770,37 +1796,37 @@ const MyHostApp = () => {
         <div className="max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
           <div className="text-center mb-8">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
-              Why choose MyHost? ✨
+              Why choose MyHost?
             </h2>
             <p className="text-lg text-gray-600">Connecting countryside homeowners with travelers</p>
           </div>
 
           {/* Stats Row - Compact */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-            <div className="text-center p-4 rounded-lg bg-gradient-to-br from-orange-50 to-rose-50">
-              <div className="w-10 h-10 bg-gradient-to-br from-orange-500 to-rose-600 rounded-lg flex items-center justify-center mx-auto mb-2">
-                <Home className="w-5 h-5 text-white" />
+            <div className="text-center p-4 rounded-xl bg-white border border-gray-200 shadow-sm">
+              <div className="mx-auto mb-2 flex justify-center">
+                <FilledIcon Icon={Home} size="md" tone="brand" />
               </div>
               <p className="text-2xl font-bold text-gray-900">150+</p>
               <p className="text-xs text-gray-600">Properties</p>
             </div>
-            <div className="text-center p-4 rounded-lg bg-gradient-to-br from-emerald-50 to-green-50">
-              <div className="w-10 h-10 bg-gradient-to-br from-emerald-500 to-green-600 rounded-lg flex items-center justify-center mx-auto mb-2">
-                <Users className="w-5 h-5 text-white" />
+            <div className="text-center p-4 rounded-xl bg-white border border-gray-200 shadow-sm">
+              <div className="mx-auto mb-2 flex justify-center">
+                <FilledIcon Icon={Users} size="md" tone="brand" />
               </div>
               <p className="text-2xl font-bold text-gray-900">5,000+</p>
               <p className="text-xs text-gray-600">Guests</p>
             </div>
-            <div className="text-center p-4 rounded-lg bg-gradient-to-br from-sky-50 to-blue-50">
-              <div className="w-10 h-10 bg-gradient-to-br from-sky-500 to-blue-600 rounded-lg flex items-center justify-center mx-auto mb-2">
-                <MapPin className="w-5 h-5 text-white" />
+            <div className="text-center p-4 rounded-xl bg-white border border-gray-200 shadow-sm">
+              <div className="mx-auto mb-2 flex justify-center">
+                <FilledIcon Icon={MapPin} size="md" tone="brand" />
               </div>
               <p className="text-2xl font-bold text-gray-900">20+</p>
               <p className="text-xs text-gray-600">Locations</p>
             </div>
-            <div className="text-center p-4 rounded-lg bg-gradient-to-br from-violet-50 to-purple-50">
-              <div className="w-10 h-10 bg-gradient-to-br from-violet-500 to-purple-600 rounded-lg flex items-center justify-center mx-auto mb-2">
-                <Star className="w-5 h-5 text-white fill-white" />
+            <div className="text-center p-4 rounded-xl bg-white border border-gray-200 shadow-sm">
+              <div className="mx-auto mb-2 flex justify-center">
+                <FilledIcon Icon={Star} size="md" tone="brand" />
               </div>
               <p className="text-2xl font-bold text-gray-900">4.8</p>
               <p className="text-xs text-gray-600">Rating</p>
@@ -1809,9 +1835,9 @@ const MyHostApp = () => {
 
           {/* Key Benefits Grid - Compact */}
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
-            <div className="p-5 border border-emerald-200 rounded-lg hover:shadow-md transition-shadow bg-gradient-to-br from-emerald-50 to-green-50">
-              <div className="w-10 h-10 bg-gradient-to-br from-emerald-500 to-green-600 rounded-lg flex items-center justify-center mb-3">
-                <Shield className="w-5 h-5 text-white" />
+            <div className="p-5 border border-gray-200 rounded-xl hover:shadow-md transition-shadow bg-white">
+              <div className="mb-3">
+                <FilledIcon Icon={Shield} size="md" tone="brand" />
               </div>
               <h3 className="text-lg font-bold text-gray-900 mb-2">Secure Payments</h3>
               <p className="text-sm text-gray-600">
@@ -1819,9 +1845,9 @@ const MyHostApp = () => {
               </p>
             </div>
 
-            <div className="p-5 border border-cyan-200 rounded-lg hover:shadow-md transition-shadow bg-gradient-to-br from-cyan-50 to-blue-50">
-              <div className="w-10 h-10 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-lg flex items-center justify-center mb-3">
-                <CheckCircle className="w-5 h-5 text-white" />
+            <div className="p-5 border border-gray-200 rounded-xl hover:shadow-md transition-shadow bg-white">
+              <div className="mb-3">
+                <FilledIcon Icon={CheckCircle} size="md" tone="brand" />
               </div>
               <h3 className="text-lg font-bold text-gray-900 mb-2">Verified Properties</h3>
               <p className="text-sm text-gray-600">
@@ -1829,9 +1855,9 @@ const MyHostApp = () => {
               </p>
             </div>
 
-            <div className="p-5 border border-violet-200 rounded-lg hover:shadow-md transition-shadow bg-gradient-to-br from-violet-50 to-purple-50">
-              <div className="w-10 h-10 bg-gradient-to-br from-violet-500 to-purple-600 rounded-lg flex items-center justify-center mb-3">
-                <Clock className="w-5 h-5 text-white" />
+            <div className="p-5 border border-gray-200 rounded-xl hover:shadow-md transition-shadow bg-white">
+              <div className="mb-3">
+                <FilledIcon Icon={Clock} size="md" tone="brand" />
               </div>
               <h3 className="text-lg font-bold text-gray-900 mb-2">24/7 Support</h3>
               <p className="text-sm text-gray-600">
@@ -1839,9 +1865,9 @@ const MyHostApp = () => {
               </p>
             </div>
 
-            <div className="p-5 border border-amber-200 rounded-lg hover:shadow-md transition-shadow bg-gradient-to-br from-amber-50 to-yellow-50">
-              <div className="w-10 h-10 bg-gradient-to-br from-amber-500 to-yellow-600 rounded-lg flex items-center justify-center mb-3">
-                <Zap className="w-5 h-5 text-white" />
+            <div className="p-5 border border-gray-200 rounded-xl hover:shadow-md transition-shadow bg-white">
+              <div className="mb-3">
+                <FilledIcon Icon={Zap} size="md" tone="brand" />
               </div>
               <h3 className="text-lg font-bold text-gray-900 mb-2">Instant Booking</h3>
               <p className="text-sm text-gray-600">
@@ -3488,7 +3514,7 @@ const MyHostApp = () => {
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[var(--logo-primary)]/3 via-[var(--logo-secondary)]/3 to-[var(--logo-accent)]/3">
+    <div className="min-h-screen bg-gradient-to-br from-[var(--logo-primary)]/3 via-[var(--logo-secondary)]/3 to-[var(--logo-accent)]/3 icon-filled-theme">
       <Header />
       {currentPage === 'home' && <FilterBar />}
       
