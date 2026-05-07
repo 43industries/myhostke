@@ -541,9 +541,10 @@ const MyHostApp = () => {
                           type="range"
                           min={minPrice}
                           max={maxPrice}
-                          step={100}
+                          step={50}
                           value={priceFilter || maxPrice}
-                          onChange={(e) => setPriceFilter(parseInt(e.target.value))}
+                          onInput={(e) => setPriceFilter(Number(e.target.value))}
+                          onChange={(e) => setPriceFilter(Number(e.target.value))}
                           className="price-range-slider w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-[var(--logo-primary)]"
                         />
                         <div className="flex justify-between text-sm text-gray-600 mt-2">
